@@ -42,7 +42,8 @@ class UserInterface {
     
     //Cambio de pantalla
     changeScreen() { 
-        
+        const pantallaLogin = document.getElementById("notepad");
+        const pantallaRegistro = document.getElementById("loginForm");
     }
 }
 

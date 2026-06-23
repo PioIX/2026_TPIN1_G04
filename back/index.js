@@ -25,11 +25,20 @@ app.get('/', function(req, res){
     });
 });
 
-// Traemos todo delaspreguntas
+// Traemos todo de las preguntas
 
 app.get('/preguntas', async function(req,res){
     try{
         let respuesta = await realizarQuery(`SELECT * FROM Preguntas`)
+        res.send(respuesta)
+    }catch(error){
+        res.send("Hubo un error")
+    }
+})
+
+app.get('/usuarios', async function(req,res){
+    try{
+        let respuesta = await realizarQuery(`SELECT * FROM Usuarios`)
         res.send(respuesta)
     }catch(error){
         res.send("Hubo un error")
