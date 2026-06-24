@@ -1,17 +1,17 @@
-export async function llamadoAlGet(){
+async function llamadoAlGet(){
     const response = await fetch('http://localhost:4000/usuarios',{ 
-        method:"GET", //GET, POST, PUT o DELETE
+        method:"GET",
         headers: {
             "Content-Type": "application/json",
         },
     })
-    console.log(response)//Desarma el json y lo arma como un objeto
     let resultUser = await response.json()
-    console.log(resultUser)
 
+    // Solo intenta escribir en la tabla si existe en el HTML
     let tabla = document.getElementById("tablaUsuarios")
-    tabla.innerHTML = "" //el innerHTML cambia el html desde el js, en este caso vacia la tabla
-    for(let i = 0; i < resultUser.length; i++){ 
+    if(tabla){
+        tabla.innerHTML = ""
+        for(let i = 0; i < resultUser.length; i++){ 
             tabla.innerHTML += `
                 <tr>
                     <td>${resultUser[i].id}</td> 
@@ -21,14 +21,16 @@ export async function llamadoAlGet(){
                     <td>${resultUser[i].es_admin}</td>
                 </tr>
             `
+        }
     }
 
     return resultUser;
 }
 
+
 async function llamadoalPost(datos) {
     try{
-        let response = await fetch("http://localhost:4000/usuarios",{
+        let response = await fetch('http://localhost:4000/usuarios',{
             method: "POST",
             headers: {
                 "Content-type":"application/json",
@@ -48,12 +50,11 @@ async function llamadoalPost(datos) {
 }
 
 function tomarDatos() {
-    let datos = { //agarra los datos ingresados
-        id: getId(),
-        usuario: getUsuario(),
-        clave: getPassword(),
-        email: getEmail(),
-        es_admin: getAdmin(),
+    let datos = {
+        usuario: ui.getUserRegistro(),
+        clave: ui.getPasswordRegistro(),
+        email: ui.getEmailRegistro(),
+        es_admin: 0,
     }
     console.log(datos)
     llamadoalPost(datos)

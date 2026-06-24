@@ -48,3 +48,5 @@ class UserInterface {
 }
 
 const ui = new UserInterface();
+
+window.ui = ui

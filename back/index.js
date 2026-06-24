@@ -25,6 +25,17 @@ app.get('/', function (req, res) {
     });
 });
 
+//Traemos todo de los usuarios
+app.get('/usuarios', async function (req, res) {
+    try {
+        let respuesta = await realizarQuery(`SELECT * FROM Usuarios`)
+        res.status(200).json(respuesta)
+    } catch (error) {
+        console.error("Error en /usuarios:", error)
+        res.status(500).json({ mensaje: "Hubo un error al obtener los usuarios" })
+    }
+});
+
 // Traemos todo de las preguntas
 
 app.get('/preguntas', async function (req, res) {
@@ -39,16 +50,16 @@ app.get('/preguntas', async function (req, res) {
 
 app.post('/usuarios', async function (req, res) {
     try {
-        // Recibimos los datos que mandó el front en el body
-        const { usuario, clave, email, es_admin } = req.body; 
-        
-        // Hacés el INSERT real en la base de datos
-        let query = `INSERT INTO Usuarios (usuario, clave, email, es_admin) VALUES ('${usuario}', '${clave}', '${email}', '${es_admin}')`;
-        await realizarQuery(query);
-        
+        const { usuario, clave, email, es_admin } = req.body;
+
+        let query = `INSERT INTO Usuarios (usuario, clave, email, es_admin) VALUES (?, ?, ?, ?)`;
+        await realizarQuery(query, [usuario, clave, email, es_admin]);
+
         res.status(201).json({ mensaje: "Usuario creado con éxito en la BD" });
     } catch (error) {
-        console.error("Error en /usuarios:", error)
+        console.error("Error en /usuarios:", error);
+        // Sin esto el front recibe HTML de error
+        res.status(500).json({ mensaje: "Hubo un error al crear el usuario" });
     }
-})
+});
 
