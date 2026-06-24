@@ -1,0 +1,133 @@
+<<<<<<< Updated upstream
+=======
+body {
+    margin: 0;
+    background-color: #edc4a6;
+    font-family: Arial, sans-serif;
+}
+
+/* Barra superior */
+
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    background-color: #ff751f;
+}
+
+nav img {
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    width: 60px;
+    height: 60px;
+    background-color: white;
+    border-radius: 50%;
+}
+
+nav a {
+    float: right;
+    margin-top: 28px;
+    margin-right: 25px;
+    text-decoration: none;
+    color: white;
+    font-size: 22px;
+}
+
+/* Pantalla principal */
+
+.inicio {
+    margin-top: 180px;
+    margin-left: 140px;
+}
+
+.inicio h1 {
+    font-size: 90px;
+    color: black;
+    margin-bottom: 15px;
+}
+
+.inicio button {
+    font-size: 40px;
+    padding: 15px 40px;
+    background-color: white;
+    border: none;
+    border-radius: 12px;
+}
+
+/* Registro */
+
+.registro {
+    width: 500px;
+    background-color: white;
+    padding: 30px;
+    border-radius: 25px;
+    margin: 120px auto;
+}
+
+.registro h1 {
+    text-align: center;
+    font-size: 60px;
+}
+
+.registro p {
+    font-size: 20px;
+}
+
+.registro input {
+    width: 95%;
+    height: 40px;
+    border-radius: 20px;
+    border: 1px solid gray;
+    padding-left: 10px;
+}
+
+.registro button {
+    width: 100%;
+    height: 50px;
+    margin-top: 15px;
+    border: none;
+    border-radius: 20px;
+    background-color: #f08a4b;
+    font-size: 20px;
+}
+
+/* Inicio de sesión */
+
+.login {
+    width: 500px;
+    background-color: white;
+    padding: 30px;
+    border-radius: 25px;
+    margin: 120px auto;
+}
+
+.login h1 {
+    text-align: center;
+    font-size: 60px;
+}
+
+.login p {
+    font-size: 20px;
+}
+
+.login input {
+    width: 95%;
+    height: 40px;
+    border-radius: 20px;
+    border: 1px solid gray;
+    padding-left: 10px;
+}
+
+.login button {
+    width: 100%;
+    height: 50px;
+    margin-top: 15px;
+    border: none;
+    border-radius: 20px;
+    background-color: #f08a4b;
+    font-size: 20px;
+}
+>>>>>>> Stashed changes
