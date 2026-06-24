@@ -41,7 +41,7 @@ async function llamadoalPost(datos) {
         console.log(result)
         llamadoAlGet()
 
-    } catch{
+    } catch (error) {
         console.log("ERROR")
     }
     
