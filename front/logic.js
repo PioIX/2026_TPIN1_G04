@@ -33,7 +33,7 @@ async function login() {
 
 };
 
-//RESOLVER EL ERROR: "TypeError: Failed to fetch"
+//RESOLVER EL ERROR: "TypeError: Failed to fetch" // RESUELTO ❤🤞💋
 // (Dice "fetch", así que es parte del back)
 async function newUser() {
     let usuario = ui.getUserRegistro()
@@ -56,4 +56,6 @@ async function newUser() {
 }
 
 window.login = login;
+
 window.newUser = newUser
+
