@@ -1,5 +1,3 @@
-<<<<<<< Updated upstream
-=======
 import { llamadoAlGet } from "./index.js"
 // Variable que indica si la sesión está iniciada:
 let user_log = 0
@@ -58,5 +56,6 @@ async function newUser() {
 }
 
 window.login = login;
+
 window.newUser = newUser
->>>>>>> Stashed changes
+
