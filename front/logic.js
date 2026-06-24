@@ -1,4 +1,3 @@
-import { llamadoAlGet } from "./index.js"
 // Variable que indica si la sesión está iniciada:
 let user_log = 0
 
@@ -34,67 +33,31 @@ async function login() {
 };
 
 
-// async function newUser() {
-//     let usuario = ui.getUserRegistro()
-//     let email = ui.getEmailRegistro()
-//     let password = ui.getPasswordRegistro()
-
-//     let listaUsuarios = await llamadoAlGet()
-
-//     for (let i = 0; i < listaUsuarios.length; i++) {
-//         if (email === listaUsuarios[i].email) {
-//             ui.clearRegistroInputs()
-//             return (-1) // Si el mail ya existe, devuelve -1 para indicar que no se pudo crear el usuario
-//         } else if (email != listaUsuarios[i].email) {
-//             ui.clearRegistroInputs()
-//             tomarDatos(usuario, clave, email, es_admin)
-//             console.log("¡Se ha registrado con éxito!")
-//             // ¿No falta nada más?
-//         }
-//     }
-// }
-
 async function newUser() {
     let usuario = ui.getUserRegistro()
     let email = ui.getEmailRegistro()
     let password = ui.getPasswordRegistro()
 
-    let listaUsuarios = await llamadoAlGet() // Esto te va a traer [] si está vacía
+    // Le asigna a la variable listaUsuarios todos los datos de la base de datos de usuarios
+    let listaUsuarios = await llamadoAlGet()
 
-    // 🌟 CONTROL CLAVE: Si la tabla está vacía, registramos de una sin revisar nada
-    if (listaUsuarios.length === 0) {
-        ui.clearRegistroInputs()
-        tomarDatos()
-        console.log("¡Se ha registrado con éxito el primer usuario!")
-        return; // Cortamos acá para que no entre al for
-    }
-
-    // Si la tabla NO está vacía, recién ahí corre tu bucle para revisar los mails
     let mailRepetido = false;
 
+    // Se chequea que el mail no se haya registrado
     for (let i = 0; i < listaUsuarios.length; i++) {
-        if (email === listaUsuarios[i].email) {
-            mailRepetido = true;
-            break; // Si ya lo encontramos, salimos del bucle
+        if (email === listaUsuarios[i].email) { // Si está en la base de datos..
+            mailRepetido = true; //Lo capta y se rompe
+            break;
         }
     }
 
-    if (mailRepetido) {
+    if (mailRepetido) { // Si el maiL SÍ está repetido (si mailRepetido = true)
         ui.clearRegistroInputs()
-        console.log("El mail ya existe")
-        return (-1) 
-    } else {
-        ui.clearRegistroInputs()
-        tomarDatos()
+        alert("El mail ya existe")
+        return;
+    } else { // Y si no está repetido, entonces...
+        ui.clearRegistroInputs() // Se vacían los inputs
+        tomarDatos() // Se toman los datos y ocurre el pedido POST (Todo esto está en el index.js del front)
         console.log("¡Se ha registrado con éxito!")
     }
 }
-
-window.login = login;
-
-window.newUser = newUser
-
-// cd back
-// npm i
-// npm install dotenv (si no está instalado)
-// node index.js

@@ -38,3 +38,24 @@ exports.realizarQuery = async function (queryString)
     }
     return returnObject[0];
 }
+
+// exports.realizarQuery = async function (queryString, params = [])
+// {
+//     let returnObject;
+//     let connection;
+//     try
+//     {
+//         connection = await mySql.createConnection(SQL_CONFIGURATION_DATA);
+//         returnObject = await connection.execute(queryString, params);
+//         return returnObject[0];  // ← movelo adentro del try
+//     }
+//     catch(err)
+//     {
+//         console.log(err);
+//         throw err;  // ← relanzá el error para que lo atrape el catch del back
+//     }
+//     finally
+//     {
+//         if(connection && connection.end) connection.end();
+//     }
+// }
