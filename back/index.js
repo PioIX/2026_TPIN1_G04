@@ -32,7 +32,8 @@ app.get('/preguntas', async function(req,res){
         let respuesta = await realizarQuery(`SELECT * FROM Preguntas`)
         res.send(respuesta)
     }catch(error){
-        res.send("Hubo un error")
+        console.error("Error en /usuarios:", error) 
+        res.status(500).json({ mensaje: "Hubo un error al obtener los usuarios" })
     }
 })
 
@@ -41,7 +42,8 @@ app.get('/usuarios', async function(req,res){
         let respuesta = await realizarQuery(`SELECT * FROM Usuarios`)
         res.send(respuesta)
     }catch(error){
-        res.send("Hubo un error")
+        console.error("Error en /usuarios:", error)
+        res.status(500).json({ mensaje: "Hubo un error al obtener los usuarios" })
     }
 })
 
