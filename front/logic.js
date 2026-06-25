@@ -1,36 +1,47 @@
-// Variable que indica si la sesión está iniciada:
-let user_log = 0
+// // Variable que indica si la sesión está iniciada:
+// let user_log = 0
+
+
+//     // Si el usuario NO existe y los datos están verificados que se cree la cuenta
+//     // ¿Cómo saber si no existe?
+//     // Si los datos no se repiten (elegir, por ejemplo el email y el password)
+//     // Verificacion de datos:
+//     // - Que todos los campos estén completos
+//     // - Que la contraseña tenga más de 8 dígitos
+
 
 async function login() {
-    usuario = ui.getUserLogin()
-    password = ui.getPasswordLogin()
+    let usuario = ui.getUserLogin()
+    let password = ui.getPasswordLogin()
 
-    // Si el usuario NO existe y los datos están verificados que se cree la cuenta
-    // ¿Cómo saber si no existe?
-    // Si los datos no se repiten (elegir, por ejemplo el email y el password)
-    // Verificacion de datos:
-    // - Que todos los campos estén completos
-    // - Que la contraseña tenga más de 8 dígitos
+    // Verifica que todos los campos estén completos
+    if (usuario === "" || password === "") {
+        alert("Debe completar todos los campos")
+        return
+    }
 
-    for (let i = 0; i < resultUser.length; i++) {
-        if (usuario != resultUser[i].usuario && password == resultUser[i].password) { // Si el email y la contraseña YA ESTÁN en la tabla...
-            if (usuario == "" || password == "") {
-                if (password.length > 7) {
-                    return id // Verificar, no es "id" solo
-                    user_log = 1
-                    console.log("Sesión iniciada")
-                } else {
-                    alert("La contraseña debe tener más de ocho dígitos")
-                }
-            } else {
-                alert("Debe completar todos los campos")
-            }
-        } else {
-            return -1
+    // Se asignan los datos del get de usuarios a una variable
+    let listaUsuarios = await llamadoAlGet()
+
+    let usuarioEncontrado
+
+    // Verifica que el usuario esté registrado
+    for (let i = 0; i < listaUsuarios.length; i++) {
+        if (usuario === listaUsuarios[i].usuario && password === listaUsuarios[i].clave) {
+            usuarioEncontrado = listaUsuarios[i]
+            break;
         }
     }
 
-};
+    if (usuarioEncontrado) {
+        user_log = usuarioEncontrado.id // Se coloca su id como usuario logueado
+        console.log("Sesión iniciada, id:", user_log)
+        alert("¡Bienvenido, " + usuarioEncontrado.usuario + "!")
+    } else {
+        alert("Usuario o contraseña incorrectos")
+        return -1
+    }
+}
 
 
 async function newUser() {
@@ -56,8 +67,8 @@ async function newUser() {
         alert("El mail ya existe")
         return;
     } else { // Y si no está repetido, entonces...
-        ui.clearRegistroInputs() // Se vacían los inputs
         tomarDatos() // Se toman los datos y ocurre el pedido POST (Todo esto está en el index.js del front)
         console.log("¡Se ha registrado con éxito!")
+        ui.clearRegistroInputs() // Se vacían los inputs
     }
 }
