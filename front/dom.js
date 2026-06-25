@@ -14,7 +14,7 @@ class UserInterface {
 
 
     getPasswordRegistro() {
-        return document.getElementById("contraseñaRegistro").value;
+        return document.getElementById("passwordRegistro").value;
     }
 
     // Obtiene los datos ingresados por el usuario en la sección de LOGIN
@@ -25,19 +25,19 @@ class UserInterface {
     }
 
     getPasswordLogin(){
-        return document.getElementById("contraseñaLogin").value;
+        return document.getElementById("passwordLogin").value;
     }
 
     //Limpiamos lo inputs
     clearRegistroInputs() {
         document.getElementById("usuarioRegistro").value = "";
         document.getElementById("correoRegistro").value = "";
-        document.getElementById("contraseñaRegistro").value = "";
+        document.getElementById("passwordRegistro").value = "";
     }
 
     clearLoginInputs() {
         document.getElementById("usuarioLogin").value = "";
-        document.getElementById("contraseñaLogin").value = "";
+        document.getElementById("passwordLogin").value = "";
     }
     
     //Cambio de pantalla
@@ -88,6 +88,7 @@ class UserInterface {
             panelAdmin.style.display = "none";
         }
     }
+
 }
 
 const ui = new UserInterface();
