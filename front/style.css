@@ -142,3 +142,33 @@ button, a{
     border-radius: 12px;
     align-items: center;
 }
+
+#seccionJuego {
+    margin-top: 100px;
+    padding: 20px;
+}
+
+#seccionJuego button {
+    font-size: 30px;
+    font-family: 'Archivo Black', sans-serif;
+    cursor: pointer;
+}
+
+#botonPasapalabra{
+    background-color: #f1da0a;
+    border: none;
+    border-radius: 12px;
+    padding: 5px;
+}
+
+#botonEnviar{
+    background-color: #5ead3c;
+    border: none;
+    border-radius: 12px;
+    padding: 5px;
+}
+
+#seccionAdmin {
+    margin-top: 100px;
+    padding: 20px;
+}

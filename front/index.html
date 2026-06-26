@@ -13,14 +13,14 @@
 
     <div id="paginaPrincipal">
         <h1>Pasapalabra</h1>
-        <button onclick="ui.empezarJuego()">PLAY</button>
+        <button onclick="ui.mostrarLogin()">PLAY</button>
     </div>
 
     <div id="barraSuperior">
-        <img src="" alt="LOGO">
+        <a href="#" onclick="ui.mostrarInicio()"><img src="Imagenes/Logo.png" alt="LOGO"></a>
         <div id="hrefs" style="display: none;">
-            <a href="#" onclick="ui.empezarJuego()">Iniciar Sesión</a>
-            <a href="#" onclick="ui.changeScreen()">Registrarse</a>
+            <a href="#" onclick="ui.mostrarLogin()">Iniciar Sesión</a>
+            <a href="#" onclick="ui.mostrarRegistro()">Registrarse</a>
         </div>
     </div>
 
@@ -52,17 +52,18 @@
     </div>
 
     <div id="seccionJuego" style="display: none;">
-        <div id="letras"></div>
-        <div id="pregunta"></div>
+        <div id="letras">
+
+        </div>
+        <div id="pregunta">
+
+        </div>
         <input type="text" placeholder="Tu respuesta aquí">
-        <button>PASAPALABRA</button>
-        <button>ENVIAR</button>
+        <button id="botonPasapalabra">PASAPALABRA</button>
+        <button id="botonEnviar">ENVIAR</button>
     </div>
     
     <div id="seccionAdmin" style="display: none;">
-        <div>
-            <img src="" alt="LOGO">
-        </div>
 
         <div>
             <h2>Usuarios</h2>

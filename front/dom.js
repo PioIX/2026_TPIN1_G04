@@ -1,7 +1,7 @@
 class UserInterface {
     constructor() {
 
-        }
+    }
     // Obtiene los datos ingresados por el usuario en la sección de REGISTRO
     // Cuando el usuario toca el boton de registrarse, se agrega un nuevo user a la base de datos
     getUserRegistro() {
@@ -20,11 +20,11 @@ class UserInterface {
     // Obtiene los datos ingresados por el usuario en la sección de LOGIN
     // Cuando el usuario toca el botón de iniciar sesión, lo compara con los usuarios de la base de datos
 
-    getUserLogin(){
+    getUserLogin() {
         return document.getElementById("usuarioLogin").value;
     }
 
-    getPasswordLogin(){
+    getPasswordLogin() {
         return document.getElementById("passwordLogin").value;
     }
 
@@ -39,51 +39,48 @@ class UserInterface {
         document.getElementById("usuarioLogin").value = "";
         document.getElementById("passwordLogin").value = "";
     }
-    
+
     //Cambio de pantalla
-// Cambio de pantalla entre Login y Registro
-    changeScreen() { 
-        const pantallaLogin = document.getElementById("seccionInicioSesion");
-        const pantallaRegistro = document.getElementById("seccionRegistro");
-        
-        if (pantallaLogin.style.display !== "none") {
-            pantallaLogin.style.display = "none";
-            pantallaRegistro.style.display = "";
-        } else {
-            pantallaLogin.style.display = "";
-            pantallaRegistro.style.display = "none";
-        }
+    // Cambio de pantalla entre Login y Registro
+    mostrarInicio() {
+        document.getElementById("paginaPrincipal").style.display = "block";
+        document.getElementById("seccionInicioSesion").style.display = "none";
+        document.getElementById("seccionRegistro").style.display = "none";
+        document.getElementById("seccionJuego").style.display = "none";
+        document.getElementById("seccionAdmin").style.display = "none";
+        document.getElementById("hrefs").style.display = "none";
     }
 
-    // Inicio del juego desde la pantalla principal
-    empezarJuego() {
+    mostrarRegistro() {
+        document.getElementById("seccionInicioSesion").style.display = "none";
+        document.getElementById("seccionRegistro").style.display = "block";
+    }
+
+    mostrarLogin() {
         const pantallaPrincipal = document.getElementById("paginaPrincipal");
         const pantallaLogin = document.getElementById("seccionInicioSesion");
         const botonesBarra = document.getElementById("hrefs");
-        
-        // Se oculta la página principal
         pantallaPrincipal.style.display = "none";
-        // Se muestra el login
-        pantallaLogin.style.display = "";
-        // Se muestran los botones de la barra superior
+        pantallaLogin.style.display = "block";
         botonesBarra.style.display = "block";
+        document.getElementById("seccionRegistro").style.display = "none";
     }
+
 
     // Muestra la pantalla del juego
     mostrarJuego() {
-        const juego = document.getElementById("seccionJuego");
-        const botonesBarra = document.getElementById("hrefs");
-        
-        juego.style.display = "block"; 
-        // Ocultamos los links de la barra para que no molesten durante la partida
-        if (botonesBarra) botonesBarra.style.display = "none"; 
+        document.getElementById("seccionJuego").style.display = "block";
+        document.getElementById("seccionInicioSesion").style.display = "none";
+        document.getElementById("hrefs").style.display = "none";
     }
 
     // Muestra u oculta la pantalla de administrador
     mostrarAdmin(visible) {
         const panelAdmin = document.getElementById("seccionAdmin");
         if (visible) {
-            panelAdmin.style.display = "block"; 
+            panelAdmin.style.display = "block";
+            document.getElementById("seccionInicioSesion").style.display = "none";
+            document.getElementById("hrefs").style.display = "none";
         } else {
             panelAdmin.style.display = "none";
         }
