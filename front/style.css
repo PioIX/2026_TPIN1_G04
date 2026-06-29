@@ -1,20 +1,22 @@
 body {
     margin: 0;
-    background-color: #f08a4b;
-    font-family: Arial, sans-serif;
+    background-color: #ffd8bb;
 }
-
+button, a{
+    cursor:pointer;
+}
 /* Barra superior */
 
-nav {
+#barraSuperior {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 80px;
+    background-color: #ff751f;
 }
 
-nav img {
+#barraSuperior img {
     position: absolute;
     top: 10px;
     left: 20px;
@@ -24,32 +26,37 @@ nav img {
     border-radius: 50%;
 }
 
-nav a {
+#barraSuperior a {
     float: right;
+    font-family: 'Chau Philomene One' , sans-serif;
     margin-top: 28px;
     margin-right: 25px;
     text-decoration: none;
-    color: white;
+    color: black;
     font-size: 22px;
 }
 
 /* Pantalla principal */
 
-.inicio {
+#paginaPrincipal{
     margin-top: 180px;
     margin-left: 140px;
 }
 
-.inicio h1 {
+#paginaPrincipal h1 {
     font-size: 90px;
     color: black;
     margin-bottom: 15px;
+    font-family: 'Chau Philomene One', sans-serif;
+    margin-bottom: 10px;
 }
 
-.inicio button {
-    font-size: 40px;
-    padding: 15px 40px;
-    background-color: white;
+#paginaPrincipal button {
+    font-size: 60px;
+    padding: 0;
+    font-family: 'Pixelify sans', sans-serif;
+    background-color: transparent;
+    color: #ff914d;
     border: none;
     border-radius: 12px;
 }
@@ -58,19 +65,22 @@ nav a {
 
 .registro {
     width: 500px;
-    background-color: white;
+    background-color: #ff7722;
     padding: 30px;
     border-radius: 25px;
     margin: 120px auto;
 }
 
-.registro h1 {
+
+#seccionRegistro h1 {
     text-align: center;
     font-size: 60px;
+    font-family: 'Chau Philomene One', sans-serif;
 }
 
 .registro p {
     font-size: 20px;
+    font-family: 'Arimo', sans-serif;
 }
 
 .registro input {
@@ -81,14 +91,15 @@ nav a {
     padding-left: 10px;
 }
 
-.registro button {
-    width: 100%;
-    height: 50px;
-    margin-top: 15px;
+#seccionRegistro button {
+    font-size: 60px;
+    padding: 0;
+    font-family: 'Pixelify sans', sans-serif;
+    background-color: transparent;
+    color: #ff914d;
     border: none;
-    border-radius: 20px;
-    background-color: #f08a4b;
-    font-size: 20px;
+    border-radius: 12px;
+    align-items: center;
 }
 
 /* Inicio de sesión */
@@ -104,10 +115,12 @@ nav a {
 .login h1 {
     text-align: center;
     font-size: 60px;
+    font-family: 'Chau Philomene One', sans-serif;
 }
 
 .login p {
     font-size: 20px;
+    font-family: 'Arimo', sans-serif;
 }
 
 .login input {
@@ -116,14 +129,46 @@ nav a {
     border-radius: 20px;
     border: 1px solid gray;
     padding-left: 10px;
+    font-family: 'Open Sans', sans-serif;
 }
 
 .login button {
-    width: 100%;
-    height: 50px;
-    margin-top: 15px;
+    font-size: 60px;
+    padding: 0;
+    font-family: 'Pixelify sans', sans-serif;
+    background-color: transparent;
+    color: #ff914d;
     border: none;
-    border-radius: 20px;
-    background-color: #f08a4b;
-    font-size: 20px;
+    border-radius: 12px;
+    align-items: center;
+}
+
+#seccionJuego {
+    margin-top: 100px;
+    padding: 20px;
+}
+
+#seccionJuego button {
+    font-size: 30px;
+    font-family: 'Archivo Black', sans-serif;
+    cursor: pointer;
+}
+
+#botonPasapalabra{
+    background-color: #f1da0a;
+    border: none;
+    border-radius: 12px;
+    padding: 5px;
+}
+
+#botonEnviar{
+    background-color: #5ead3c;
+    border: none;
+    border-radius: 12px;
+    padding: 5px;
+}
+
+#seccionAdmin {
+    margin-top: 100px;
+    padding: 20px;
 }

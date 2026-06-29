@@ -1,100 +1,80 @@
-import { llamadoAlGet } from "./index.js"
-// Variable que indica si la sesión está iniciada:
-let user_log = 0
+// // Variable que indica si la sesión está iniciada:
+// let user_log = 0
+
+
+//     // Si el usuario NO existe y los datos están verificados que se cree la cuenta
+//     // ¿Cómo saber si no existe?
+//     // Si los datos no se repiten (elegir, por ejemplo el email y el password)
+//     // Verificacion de datos:
+//     // - Que todos los campos estén completos
+//     // - Que la contraseña tenga más de 8 dígitos
+
 
 async function login() {
-    usuario = ui.getUserLogin()
-    password = ui.getPasswordLogin()
+    let usuario = ui.getUserLogin()
+    let password = ui.getPasswordLogin()
 
-    // Si el usuario NO existe y los datos están verificados que se cree la cuenta
-    // ¿Cómo saber si no existe?
-    // Si los datos no se repiten (elegir, por ejemplo el email y el password)
-    // Verificacion de datos:
-    // - Que todos los campos estén completos
-    // - Que la contraseña tenga más de 8 dígitos
-
-    for (let i = 0; i < resultUser.length; i++) {
-        if (usuario != resultUser[i].usuario && password == resultUser[i].password) { // Si el email y la contraseña YA ESTÁN en la tabla...
-            if (usuario == "" || password == "") {
-                if (password.length > 7) {
-                    return id // Verificar, no es "id" solo
-                    user_log = 1
-                    console.log("Sesión iniciada")
-                } else {
-                    alert("La contraseña debe tener más de ocho dígitos")
-                }
-            } else {
-                alert("Debe completar todos los campos")
-            }
-        } else {
-            return -1
-        }
+    // Verifica que todos los campos estén completos
+    if (usuario === "" || password === "") {
+        alert("Debe completar todos los campos")
+        return
     }
 
-};
+    // Verifica si el usuario que inició sesión es el admin
+    if (usuario === "admin" && password === "banana4") {
+        ui.mostrarAdmin(true); // Si el usuario es el admin cambia a la pantalla de admin
+        return;
+    }
 
+    // Se asignan los datos del get de usuarios a una variable
+    let listaUsuarios = await llamadoAlGet()
 
-// async function newUser() {
-//     let usuario = ui.getUserRegistro()
-//     let email = ui.getEmailRegistro()
-//     let password = ui.getPasswordRegistro()
+    let usuarioEncontrado
 
-//     let listaUsuarios = await llamadoAlGet()
+    // Verifica que el usuario esté registrado
+    for (let i = 0; i < listaUsuarios.length; i++) {
+        if (usuario === listaUsuarios[i].usuario && password === listaUsuarios[i].clave) {
+            usuarioEncontrado = listaUsuarios[i]
+            break;
+        }
+    }
+    if (usuarioEncontrado) {
+        user_log = usuarioEncontrado.id // Se coloca su id como usuario logueado
+        console.log("Sesión iniciada, id:", user_log)
+        alert("¡Bienvenido, " + usuarioEncontrado.usuario + "!")
+        ui.mostrarJuego()
+    } else {
+        alert("Usuario o contraseña incorrectos")
+        return -1
+    }
+}
 
-//     for (let i = 0; i < listaUsuarios.length; i++) {
-//         if (email === listaUsuarios[i].email) {
-//             ui.clearRegistroInputs()
-//             return (-1) // Si el mail ya existe, devuelve -1 para indicar que no se pudo crear el usuario
-//         } else if (email != listaUsuarios[i].email) {
-//             ui.clearRegistroInputs()
-//             tomarDatos(usuario, clave, email, es_admin)
-//             console.log("¡Se ha registrado con éxito!")
-//             // ¿No falta nada más?
-//         }
-//     }
-// }
 
 async function newUser() {
     let usuario = ui.getUserRegistro()
     let email = ui.getEmailRegistro()
     let password = ui.getPasswordRegistro()
 
-    let listaUsuarios = await llamadoAlGet() // Esto te va a traer [] si está vacía
+    // Le asigna a la variable listaUsuarios todos los datos de la base de datos de usuarios
+    let listaUsuarios = await llamadoAlGet()
 
-    // 🌟 CONTROL CLAVE: Si la tabla está vacía, registramos de una sin revisar nada
-    if (listaUsuarios.length === 0) {
-        ui.clearRegistroInputs()
-        tomarDatos()
-        console.log("¡Se ha registrado con éxito el primer usuario!")
-        return; // Cortamos acá para que no entre al for
-    }
-
-    // Si la tabla NO está vacía, recién ahí corre tu bucle para revisar los mails
     let mailRepetido = false;
 
+    // Se chequea que el mail no se haya registrado
     for (let i = 0; i < listaUsuarios.length; i++) {
-        if (email === listaUsuarios[i].email) {
-            mailRepetido = true;
-            break; // Si ya lo encontramos, salimos del bucle
+        if (email === listaUsuarios[i].email) { // Si está en la base de datos..
+            mailRepetido = true; //Lo capta y se rompe
+            break;
         }
     }
 
-    if (mailRepetido) {
+    if (mailRepetido) { // Si el maiL SÍ está repetido (si mailRepetido = true)
         ui.clearRegistroInputs()
-        console.log("El mail ya existe")
-        return (-1) 
-    } else {
-        ui.clearRegistroInputs()
-        tomarDatos()
+        alert("El mail ya existe")
+        return;
+    } else { // Y si no está repetido, entonces...
+        tomarDatos() // Se toman los datos y ocurre el pedido POST (Todo esto está en el index.js del front)
         console.log("¡Se ha registrado con éxito!")
+        ui.clearRegistroInputs() // Se vacían los inputs
     }
 }
-
-window.login = login;
-
-window.newUser = newUser
-
-// cd back
-// npm i
-// npm install dotenv (si no está instalado)
-// node index.js

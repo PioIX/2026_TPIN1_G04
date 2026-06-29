@@ -24,31 +24,91 @@ app.get('/', function (req, res) {
         message: 'GET Home route working fine!'
     });
 });
+//  USUARIOS
+//Traemos todo de los usuarios
+app.get('/usuarios', async function (req, res) {
+    try {
+        let respuesta = await realizarQuery(`SELECT * FROM Usuarios`)
+        res.status(200).json(respuesta)
+    } catch (error) {
+        console.error("Error en /usuarios:", error)
+        res.status(500).json({ mensaje: "Hubo un error al obtener los usuarios" })
+    }
+});
 
+//Se agrega un nuevo usuario
+app.post('/usuarios', async function (req, res) {
+    try {
+        await realizarQuery(`INSERT INTO Usuarios (usuario, clave, email, es_admin) VALUES
+            ('${req.body.usuario}', '${req.body.clave}', '${req.body.email}', '${req.body.es_admin}')`);
+        res.status(201).json({ mensaje: "Usuario creado con éxito" });
+    } catch (error) {
+        console.error("Error en /usuarios:", error);
+        res.status(500).json({ mensaje: "Hubo un error al crear el usuario" });
+    }
+});
+
+//Elimina el usuario segun su id
+app.delete('/usuarios', async function(req,res){
+    try{
+        let respuesta = await realizarQuery(`DELETE FROM Usuarios WHERE id = ${req.body.id}`)
+        res.json({ message: "Usuario eliminado" })
+    }catch(error){
+        return ("Hubo un error")
+    }
+})
+
+//Modifica datos del usuario
+app.put('/usuarios', async function(req,res){
+    try{
+        let respuesta = await realizarQuery(`UPDATE Usuarios SET ${req.body.modificacion} = '${req.body.valor}' WHERE id = ${req.body.id}`)
+        res.json({ message: "Usuario modificado" })
+    }catch(error){
+        return("Hubo un error")
+    }
+})
+//PREGUNTAS
 // Traemos todo de las preguntas
-
 app.get('/preguntas', async function (req, res) {
     try {
         let respuesta = await realizarQuery(`SELECT * FROM Preguntas`)
         res.send(respuesta)
     } catch (error) {
-        console.error("Error en /usuarios:", error)
-        res.status(500).json({ mensaje: "Hubo un error al obtener los usuarios" })
+        console.error("Error en /preguntas:", error)
+        res.status(500).json({ mensaje: "Hubo un error al obtener las preguntas" })
     }
 })
 
-app.post('/usuarios', async function (req, res) {
+//Se agrega una nueva pregunta
+app.post('/preguntas', async function (req, res) {
     try {
-        // Recibimos los datos que mandó el front en el body
-        const { usuario, clave, email, es_admin } = req.body; 
-        
-        // Hacés el INSERT real en la base de datos
-        let query = `INSERT INTO Usuarios (usuario, clave, email, es_admin) VALUES ('${usuario}', '${clave}', '${email}', '${es_admin}')`;
-        await realizarQuery(query);
-        
-        res.status(201).json({ mensaje: "Usuario creado con éxito en la BD" });
+        await realizarQuery(`INSERT INTO Preguntas (letra, condicion, pregunta, respuesta) VALUES
+            ('${req.body.letra}', '${req.body.condicion}', '${req.body.pregunta}', '${req.body.respuesta}')`);
+        res.status(201).json({ mensaje: "Pregunta creada con éxito" });
     } catch (error) {
-        console.error("Error en /usuarios:", error)
+        console.error("Error en /pregunta:", error);
+        res.status(500).json({ mensaje: "Hubo un error al crear la pregunta" });
+    }
+});
+
+//Se elimina una pregunta
+app.delete('/preguntas', async function(req,res){
+    try{
+        let respuesta = await realizarQuery(`DELETE FROM Preguntas WHERE id = ${req.body.id}`)
+        res.json({ message: "Pregunta eliminada" })
+    }catch(error){
+        console.error("Error al eliminar pregunta:", error);
+        res.status(500).json({ mensaje: "Hubo un error al eliminar la pregunta"});
     }
 })
 
+//Se modifica una pregunta
+app.put('/preguntas', async function(req,res){
+    try{
+        let respuesta = await realizarQuery(`UPDATE Preguntas SET ${req.body.modificacion} = '${req.body.valor}' WHERE id = ${req.body.id}`)
+        res.json({ message: "Pregunta modificado" })
+    }catch(error){
+        console.error("Error al modificar pregunta:", error);
+        res.status(500).json({ mensaje: "Hubo un error al modificar la pregunta"});
+    }
+})

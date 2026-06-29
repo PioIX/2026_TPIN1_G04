@@ -1,17 +1,22 @@
-export async function llamadoAlGet(){
+async function llamadoAlGet(){
+    //fetch de la tabla usuarios
     const response = await fetch('http://localhost:4000/usuarios',{ 
-        method:"GET", //GET, POST, PUT o DELETE
+        method:"GET",
         headers: {
             "Content-Type": "application/json",
         },
     })
-    console.log(response)//Desarma el json y lo arma como un objeto
     let resultUser = await response.json()
-    console.log(resultUser)
-
+    
+    // Solo intenta escribir en la tabla si existe en el HTML
     let tabla = document.getElementById("tablaUsuarios")
-    tabla.innerHTML = "" //el innerHTML cambia el html desde el js, en este caso vacia la tabla
-    for(let i = 0; i < resultUser.length; i++){ 
+    let select = document.getElementById("selectUser")
+    let selectModificar = document.getElementById("selectModificarDatos")
+    
+    if(tabla){
+        //llena la tabla usuarios
+        tabla.innerHTML = ""
+        for(let i = 0; i < resultUser.length; i++){ 
             tabla.innerHTML += `
                 <tr>
                     <td>${resultUser[i].id}</td> 
@@ -21,26 +26,42 @@ export async function llamadoAlGet(){
                     <td>${resultUser[i].es_admin}</td>
                 </tr>
             `
+        }
+        //Llena el select con el usuario
+        select.innerHTML = "" //aca vacia el select para que luego se cargue con los datos de la tabla
+        for(let i = 0; i < resultUser.length; i++){//se fija las respuestas del json y las agrega al select 
+            select.innerHTML += `
+                <option value="${resultUser[i].id}">${resultUser[i].usuario}</option>
+            `
+        }
+        //Llena el select con los ids
+        selectModificar.innerHTML = "" 
+        for(let i = 0; i < resultUser.length; i++){ //misma estructura que el anterior, agrega las respuestas del pedido get y las agrega al select
+            selectModificar.innerHTML += `
+                <option value="${resultUser[i].id}">${resultUser[i].usuario}</option>
+            `
+        }
+        
     }
-
+    
+    
     return resultUser;
 }
 
+
 async function llamadoalPost(datos) {
     try{
-        let response = await fetch("http://localhost:4000/usuarios",{
+        let response = await fetch('http://localhost:4000/usuarios',{
             method: "POST",
             headers: {
                 "Content-type":"application/json",
             },
             body: JSON.stringify(datos) // usa los datos de la funcion "tomarDatos" y los manda al back
         })
-
         console.log(response)
         let result = await response.json()
         console.log(result)
         llamadoAlGet()
-
     } catch (error) {
         console.log("ERROR")
     }
@@ -48,13 +69,191 @@ async function llamadoalPost(datos) {
 }
 
 function tomarDatos() {
-    let datos = { //agarra los datos ingresados
-        id: getId(),
-        usuario: getUsuario(),
-        clave: getPassword(),
-        email: getEmail(),
-        es_admin: getAdmin(),
+    let datos = {
+        usuario: ui.getUserRegistro(),
+        clave: ui.getPasswordRegistro(),
+        email: ui.getEmailRegistro(),
+        es_admin: 0,
     }
     console.log(datos)
     llamadoalPost(datos)
+}
+//USUARIOS ADMIN
+//agregar usuario
+function agregarUsuario(){
+    let datos = {
+        usuario: ui.getUser(),
+        clave: ui.getClave(),
+        email: ui.getEmail(),
+        es_admin: ui.getEsAdmin()
+    }
+    console.log(datos)
+    llamadoalPost(datos)
+}
+//Elimnar usuario
+async function eliminarUsuario(){
+    let dato = ui.getSelectUser() //agarra el dato del select
+    try{
+        let response = await fetch("http://localhost:4000/usuarios",{
+            method: "DELETE",
+            headers: {
+                "Content-Type":"application/json",
+            },
+            body: JSON.stringify({ id: dato }) //convierte los datos en json y los manda al back
+        })
+        let result = await response.json()
+        console.log(result)
+        llamadoAlGet()
+
+    }catch(error){
+        return("Hubo un error")
+    }
+}
+//Modificar datos
+async function modificarUsuario(){
+    let datos = { // obtiene los datos de los inputs y selects
+        id: ui.getModificarDatos(),
+        modificacion: ui.getSelectModificacion(),
+        valor: ui.getNuevoValor()
+    }
+    try{
+        let response = await fetch("http://localhost:4000/usuarios",{
+            method: "PUT",
+            headers: {
+                "Content-Type":"application/json",
+            },
+            body: JSON.stringify(datos) //convierte los datos obtenidos en json y los manda al back
+        })
+        let result = await response.json()
+        console.log(result)
+        llamadoAlGet()
+    }catch(error){
+        return ("Hubo un error")
+    }
+}
+//PREGUNTAS ADMIN
+async function llamadoAlGetPreguntas(datos){
+    //fetch de la tabla preguntas
+    const respuesta = await fetch('http://localhost:4000/preguntas',{
+        method:"GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    })
+    let resultPregunta = await respuesta.json()
+    let tablaPreguntas = document.getElementById("tablaPreguntas")
+    let select = document.getElementById("selectPregunta")
+    let selectModificarPreguntas = document.getElementById("selectModificarDatosPreguntas")
+    //llena la tabla preguntas
+    if(tablaPreguntas){
+        tablaPreguntas.innerHTML = ""
+        for(let i = 0; i < resultPregunta.length; i++){ 
+            tablaPreguntas.innerHTML += `
+                <tr>
+                    <td>${resultPregunta[i].id}</td> 
+                    <td>${resultPregunta[i].letra}</td>
+                    <td>${resultPregunta[i].condicion}</td>
+                    <td>${resultPregunta[i].pregunta}</td>
+                    <td>${resultPregunta[i].respuesta}</td>
+                </tr>
+            `
+        }
+        //Llena el select con las preguntas
+        select.innerHTML = "" 
+        for(let i = 0; i < resultPregunta.length; i++){
+            select.innerHTML += `
+                <option value="${resultPregunta[i].id}">${resultPregunta[i].pregunta}</option>
+            `
+        }
+        //Llena el select con los ids
+        selectModificarPreguntas.innerHTML = "" 
+        for(let i = 0; i < resultPregunta.length; i++){ 
+            selectModificarPreguntas.innerHTML += `
+                <option value="${resultPregunta[i].id}">${resultPregunta[i].pregunta}</option>
+            `
+        }
+    }
+}
+
+async function llamadoalPostPreguntas(datos){
+    try{
+        let response = await fetch('http://localhost:4000/preguntas',{
+            method: "POST",
+            headers: {
+                "Content-type":"application/json",
+            },
+            body: JSON.stringify(datos)
+        })
+        console.log(response)
+        let result = await response.json()
+        console.log(result)
+        llamadoAlGetPreguntas()
+    } catch (error) {
+        console.log("ERROR")
+    }
+    
+}
+//agregar pregunta
+function agregarPregunta(){
+    let datos = {
+        letra: ui.getLetra(),
+        condicion: ui.getCondicion(),
+        pregunta: ui.getPregunta(),
+        respuesta: ui.getRespuesta()
+    }
+    console.log(datos)
+    llamadoalPostPreguntas(datos)
+}
+
+//eliminar pregunta
+async function eliminarPregunta(){
+    let dato = ui.getSelectPregunta() //agarra el dato del select
+    try{
+        let response = await fetch("http://localhost:4000/pregunta",{
+            method: "DELETE",
+            headers: {
+                "Content-Type":"application/json",
+            },
+            body: JSON.stringify({ id: dato }) //convierte los datos en json y los manda al back
+        })
+        let result = await response.json()
+        console.log(result)
+        llamadoAlGetPreguntas()
+    }catch(error){
+        return("Hubo un error")
+    }
+}
+
+//modificar pregunta
+async function modificarPregunta(){
+    let datos = { // obtiene los datos de los inputs y selects
+        id: ui.getModificarDatosPreguntas(),
+        modificacion: ui.getSelectModificacionPreguntas(),
+        valor: ui.getNuevoValorPregunta()
+    }
+    try{
+        let response = await fetch("http://localhost:4000/preguntas",{
+            method: "PUT",
+            headers: {
+                "Content-Type":"application/json",
+            },
+            body: JSON.stringify(datos) //convierte los datos obtenidos en json y los manda al back
+        })
+        let result = await response.json()
+        console.log(result)
+        llamadoAlGetPreguntas()
+    }catch(error){
+        return ("Hubo un error")
+    }
+}
+
+//JUEGO 
+//Agregar letras
+function mostrarLetras(preguntas){
+    let letras = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ"
+    let div = document.getElementById("letras")
+    div.innerHTML = ""
+    for(let i = 0; i < letras.length; i++){ //😳😳😳
+        div.innerHTML += `<span>${letras[i]}</span>`
+    }
 }
