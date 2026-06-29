@@ -78,3 +78,11 @@ async function newUser() {
         ui.clearRegistroInputs() // Se vacían los inputs
     }
 }
+
+// async function agregarLetras(){
+//     let tabla = await llamadoAlGetPreguntas()
+    
+//     for(i= 0; i < tabla.length; i++){ //Trae las letras de la BD
+//         let letras = tabla[i].letra
+//     }
+// }
