@@ -42,7 +42,6 @@ async function login() {
         user_log = usuarioEncontrado.id // Se coloca su id como usuario logueado
         console.log("Sesión iniciada, id:", user_log)
         alert("¡Bienvenido, " + usuarioEncontrado.usuario + "!")
-        console.log("Llamando mostrarJuego...")
         ui.mostrarJuego()
     } else {
         alert("Usuario o contraseña incorrectos")
