@@ -53,7 +53,7 @@
 
     <div id="seccionJuego" style="display: none;">
         <div id="letras">
-
+            
         </div>
         <div id="pregunta">
 
@@ -64,21 +64,103 @@
     </div>
     
     <div id="seccionAdmin" style="display: none;">
-
         <div>
             <h2>Usuarios</h2>
-            <button>Traer usuarios</button>
-            <button>Agregar Usuario</button>
-            <button>Eliminar Usuario</button>
-            <button>Modificar Usuario</button>
+            <!--Traer Usuarios-->
+            <h3>Traer usuarios</h3>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>usuario</th>
+                        <th>clave</th>
+                        <th>email</th>
+                        <th>es_admin</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaUsuarios">
+                </tbody>
+            </table>
+            <button onclick="llamadoAlGet()">Traer usuarios</button>
+
+            <!--Agregar usuario-->
+            <h3>Agregar usuario</h3>
+            <input id="usuarioIngresado" type="text" placeholder="Ingrese el usuario">
+            <input id="claveIngresada" type="text" placeholder="Ingrese la clave">
+            <input id="emailIngresado" type="text" placeholder="Ingrese el email">
+            <select id="adminIngresado">
+                <option value="" disabled selected hidden>¿Es admin?</option>
+                <option value="1">Si</option>
+                <option value="0">No</option>
+            </select>
+            <button onclick="agregarUsuario()">Agregar Usuario</button>
+
+            <!--Eliminar usuario-->
+            <h3>Eliminar usuario</h3>
+            <select id="selectUser"></select>
+            <button onclick="eliminarUsuario()">Eliminar usuario de la base de datos</button>
+
+            <!--Modificar datos del usuario-->
+            <h3>Modificar Datos</h3>
+            <select id="selectModificarDatos"></select> <!--Se cargan los ids y el admin elije a qué user modificar-->
+            <select id="selectModificacion"><!--Se cargan los tipos de datos que puede modificar-->
+                <option value="id">Id</option>
+                <option value="user">Usuario</option>
+                <option value="clave">Clave</option>
+                <option value="email">Email</option>
+                <option value="es_admin">¿Es admin?</option>
+            </select>
+            <input id="valoraModificar" type="text" placeholder="Ingrese el nuevo dato">
+            <button onclick="modificarUsuario()">Modificar Usuario</button>
         </div>
 
         <div>
             <h2>Preguntas</h2>
-            <button>Traer preguntas</button>
-            <button>Agregar pregunta</button>
-            <button>Eliminar pregunta</button>
-            <button>Modificar pregunta</button>
+            <!--Traer pregunta-->
+            <h3>Traer preguntas</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>letra</th>
+                        <th>condicion</th>
+                        <th>pregunta</th>
+                        <th>respuesta</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaPreguntas">
+                </tbody>
+            </table>
+            <button onclick="llamadoAlGetPreguntas()">Traer preguntas</button>
+            <!--Agregar pregunta-->
+            <h3>Agregar pregunta</h3>
+            <input id="letraIngresada" type="text" placeholder="Ingrese la letra">
+            <select id="condicionIngresada">
+                <option value="" disabled selected hidden>¿Contiene o empieza?</option>
+                <option value="Empieza con">Empieza con ...</option>
+                <option value="Contiene la">Contiene la ...</option>
+            </select>
+            <input id="preguntaIngresada" type="text" placeholder="Ingrese la pregunta">
+            <input id="respuestaIngresada" type="text" placeholder="Ingrese la respuesta">
+            
+            <button onclick="agregarPregunta()">Agregar pregunta</button>
+            <!--Eliminar pregunta-->
+            <h3>Eliminar pregunta</h3>
+            <select id="selectPregunta"></select>
+            <button onclick="eliminarPregunta()">Eliminar pregunta</button>
+            <!--Modificar pregunta-->
+            <h3>Modificar pregunta</h3>
+            <select id="selectModificarDatosPreguntas"></select> 
+            <select id="selectModificacionPreguntas">
+                <option value="id">Id</option>
+                <option value="letra">Letra</option>
+                <option value="condicion">Condicion</option>
+                <option value="pregunta">Pregunta</option>
+                <option value="respuesta">Respuesta</option>
+            </select>
+            <input id="valoraModificarPregunta" type="text" placeholder="Ingrese el nuevo dato">
+            <button onclick="modificarPregunta()">Modificar pregunta</button>
         </div>
     </div>
 
