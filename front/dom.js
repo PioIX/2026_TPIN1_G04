@@ -66,7 +66,6 @@ class UserInterface {
         document.getElementById("seccionRegistro").style.display = "none";
     }
 
-
     // Muestra la pantalla del juego
     mostrarJuego() {
         document.getElementById("seccionJuego").style.display = "block";

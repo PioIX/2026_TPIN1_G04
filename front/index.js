@@ -172,6 +172,7 @@ async function llamadoAlGetPreguntas(datos){
                 <option value="${resultPregunta[i].id}">${resultPregunta[i].pregunta}</option>
             `
         }
+        
     }
 }
 
@@ -247,13 +248,4 @@ async function modificarPregunta(){
     }
 }
 
-//JUEGO 
-//Agregar letras
-function mostrarLetras(preguntas){
-    let letras = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ"
-    let div = document.getElementById("letras")
-    div.innerHTML = ""
-    for(let i = 0; i < letras.length; i++){ //😳😳😳
-        div.innerHTML += `<span>${letras[i]}</span>`
-    }
-}
+
