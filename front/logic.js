@@ -20,6 +20,12 @@ async function login() {
         return
     }
 
+    // Verifica si el usuario que inició sesión es el admin
+    if (usuario === "admin" && password === "banana4") {
+        ui.mostrarAdmin(true); // Si el usuario es el admin cambia a la pantalla de admin
+        return;
+    }
+
     // Se asignan los datos del get de usuarios a una variable
     let listaUsuarios = await llamadoAlGet()
 
@@ -32,11 +38,11 @@ async function login() {
             break;
         }
     }
-
     if (usuarioEncontrado) {
         user_log = usuarioEncontrado.id // Se coloca su id como usuario logueado
         console.log("Sesión iniciada, id:", user_log)
         alert("¡Bienvenido, " + usuarioEncontrado.usuario + "!")
+        ui.mostrarJuego()
     } else {
         alert("Usuario o contraseña incorrectos")
         return -1
@@ -72,3 +78,11 @@ async function newUser() {
         ui.clearRegistroInputs() // Se vacían los inputs
     }
 }
+
+// async function agregarLetras(){
+//     let tabla = await llamadoAlGetPreguntas()
+    
+//     for(i= 0; i < tabla.length; i++){ //Trae las letras de la BD
+//         let letras = tabla[i].letra
+//     }
+// }

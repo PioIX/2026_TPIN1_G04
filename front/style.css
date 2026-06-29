@@ -100,6 +100,7 @@ button, a{
     border: none;
     border-radius: 12px;
     align-items: center;
+    justify-content: center;
 }
 
 /* Inicio de sesión */
@@ -109,17 +110,19 @@ button, a{
     background-color: white;
     padding: 30px;
     border-radius: 25px;
-    margin: 120px auto;
+    margin: 70px auto;
 }
 
-.login h1 {
+#seccionInicioSesion h1 {
     text-align: center;
+    height: 20%;
+    margin-top: 15%;
     font-size: 60px;
     font-family: 'Chau Philomene One', sans-serif;
 }
 
 .login p {
-    font-size: 20px;
+    font-size: 30px;
     font-family: 'Arimo', sans-serif;
 }
 
@@ -132,7 +135,7 @@ button, a{
     font-family: 'Open Sans', sans-serif;
 }
 
-.login button {
+#botonInicioSesion {
     font-size: 60px;
     padding: 0;
     font-family: 'Pixelify sans', sans-serif;
@@ -141,4 +144,34 @@ button, a{
     border: none;
     border-radius: 12px;
     align-items: center;
+}
+
+#seccionJuego {
+    margin-top: 100px;
+    padding: 20px;
+}
+
+#seccionJuego button {
+    font-size: 30px;
+    font-family: 'Archivo Black', sans-serif;
+    cursor: pointer;
+}
+
+#botonPasapalabra{
+    background-color: #f1da0a;
+    border: none;
+    border-radius: 12px;
+    padding: 5px;
+}
+
+#botonEnviar{
+    background-color: #5ead3c;
+    border: none;
+    border-radius: 12px;
+    padding: 5px;
+}
+
+#seccionAdmin {
+    margin-top: 100px;
+    padding: 20px;
 }

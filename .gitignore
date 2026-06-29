@@ -1,1 +1,4 @@
-
+.env
+*.env
+back/.home.env
+back/.pio.env
