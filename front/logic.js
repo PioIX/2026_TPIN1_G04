@@ -42,7 +42,7 @@ async function login() {
         user_log = usuarioEncontrado.id // Se coloca su id como usuario logueado
         console.log("Sesión iniciada, id:", user_log)
         alert("¡Bienvenido, " + usuarioEncontrado.usuario + "!")
-        ui.mostrarJuego()
+        ui.mostrarInicio()
     } else {
         alert("Usuario o contraseña incorrectos")
         return -1
@@ -77,6 +77,10 @@ async function newUser() {
         console.log("¡Se ha registrado con éxito!")
         ui.clearRegistroInputs() // Se vacían los inputs
     }
+}
+
+function inicializarJuego() {
+    ui.temporizador().iniciarTemporizador()
 }
 
 // async function agregarLetras(){

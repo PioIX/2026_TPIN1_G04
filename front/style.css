@@ -146,6 +146,21 @@ button, a{
     align-items: center;
 }
 
+/* Pantalla home */
+
+#home button {
+    font-size: 60px;
+    margin: 100px;
+    font-family: 'Pixelify sans', sans-serif;
+    background-color: transparent;
+    color: #ff914d;
+    border: none;
+    border-radius: 12px;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Pantalla juego */
 #seccionJuego {
     margin-top: 100px;
     padding: 20px;
@@ -171,6 +186,17 @@ button, a{
     padding: 5px;
 }
 
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    background-color: #ff7722;
+    border-radius: 10px;
+    padding: 10px, 20px;
+}
+/* Pantalla admin */
 #seccionAdmin {
     margin-top: 100px;
     padding: 20px;
