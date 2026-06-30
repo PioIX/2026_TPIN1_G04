@@ -2,9 +2,11 @@ body {
     margin: 0;
     background-color: #ffd8bb;
 }
+
 button, a{
     cursor:pointer;
 }
+
 /* Barra superior */
 
 #barraSuperior {
@@ -14,25 +16,30 @@ button, a{
     width: 100%;
     height: 80px;
     background-color: #ff751f;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 25px;
+    box-sizing: border-box;
+    z-index: 1000;
 }
 
 #barraSuperior img {
-    position: absolute;
-    top: 10px;
-    left: 20px;
     width: 60px;
     height: 60px;
     background-color: white;
     border-radius: 50%;
 }
 
+#hrefs{
+    display: flex;
+    gap: 30px;
+}
+
 #barraSuperior a {
-    float: right;
-    font-family: 'Chau Philomene One' , sans-serif;
-    margin-top: 28px;
-    margin-right: 25px;
     text-decoration: none;
     color: black;
+    font-family: 'Chau Philomene One', sans-serif;
     font-size: 22px;
 }
 
@@ -46,132 +53,119 @@ button, a{
 #paginaPrincipal h1 {
     font-size: 90px;
     color: black;
-    margin-bottom: 15px;
-    font-family: 'Chau Philomene One', sans-serif;
     margin-bottom: 10px;
+    font-family: 'Chau Philomene One', sans-serif;
 }
 
 #paginaPrincipal button {
     font-size: 60px;
     padding: 0;
-    font-family: 'Pixelify sans', sans-serif;
+    font-family: 'Pixelify Sans', sans-serif;
     background-color: transparent;
     color: #ff914d;
     border: none;
-    border-radius: 12px;
 }
 
 /* Registro */
 
-.registro {
-    width: 500px;
-    background-color: #ff7722;
-    padding: 30px;
-    border-radius: 25px;
-    margin: 120px auto;
+#seccionRegistro{
+    text-align: center;
+    margin-top: 90px;
 }
 
-
 #seccionRegistro h1 {
-    text-align: center;
     font-size: 60px;
     font-family: 'Chau Philomene One', sans-serif;
+    margin-bottom: 20px;
+}
+
+.registro {
+    width: 520px;
+    background-color: #ff7722;
+    padding: 35px;
+    border-radius: 25px;
+    margin: auto;
+    text-align: left;
+    box-shadow: 15px 15px 0px black;
 }
 
 .registro p {
-    font-size: 20px;
+    font-size: 22px;
     font-family: 'Arimo', sans-serif;
+    margin-bottom: 12px;
 }
 
 .registro input {
-    width: 95%;
-    height: 40px;
-    border-radius: 20px;
-    border: 1px solid gray;
-    padding-left: 10px;
+    width: 96%;
+    height: 45px;
+    border: none;
+    border-radius: 25px;
+    background-color: #d7ded8;
+    padding-left: 15px;
+    font-size: 18px;
+    margin-bottom: 22px;
+    font-family: 'Open Sans', sans-serif;
 }
 
 #seccionRegistro button {
     font-size: 60px;
     padding: 0;
-    font-family: 'Pixelify sans', sans-serif;
+    font-family: 'Pixelify Sans', sans-serif;
     background-color: transparent;
     color: #ff914d;
     border: none;
-    border-radius: 12px;
-    align-items: center;
-    justify-content: center;
+    display: block;
+    margin: 35px auto;
 }
 
 /* Inicio de sesión */
 
-.login {
-    width: 500px;
-    background-color: white;
-    padding: 30px;
-    border-radius: 25px;
-    margin: 70px auto;
+#seccionInicioSesion{
+    text-align: center;
+    margin-top: 90px;
 }
 
 #seccionInicioSesion h1 {
-    text-align: center;
-    height: 20%;
-    margin-top: 15%;
     font-size: 60px;
     font-family: 'Chau Philomene One', sans-serif;
+    margin-bottom: 20px;
+}
+
+.login {
+    width: 520px;
+    background-color: #ff7722;
+    padding: 35px;
+    border-radius: 25px;
+    margin: auto;
+    text-align: left;
+    box-shadow: 15px 15px 0px black;
 }
 
 .login p {
-    font-size: 30px;
+    font-size: 22px;
     font-family: 'Arimo', sans-serif;
+    margin-bottom: 12px;
 }
 
 .login input {
-    width: 95%;
-    height: 40px;
-    border-radius: 20px;
-    border: 1px solid gray;
-    padding-left: 10px;
+    width: 96%;
+    height: 45px;
+    border: none;
+    border-radius: 25px;
+    background-color: #d7ded8;
+    padding-left: 15px;
+    font-size: 18px;
+    margin-bottom: 22px;
     font-family: 'Open Sans', sans-serif;
 }
 
 #botonInicioSesion {
     font-size: 60px;
     padding: 0;
-    font-family: 'Pixelify sans', sans-serif;
+    font-family: 'Pixelify Sans', sans-serif;
     background-color: transparent;
     color: #ff914d;
     border: none;
-    border-radius: 12px;
-    align-items: center;
-}
-
-#seccionJuego {
-    margin-top: 100px;
-    padding: 20px;
-}
-
-#seccionJuego button {
-    font-size: 30px;
-    font-family: 'Archivo Black', sans-serif;
-    cursor: pointer;
-}
-
-#botonPasapalabra{
-    background-color: #f1da0a;
-    border: none;
-    border-radius: 12px;
-    padding: 5px;
-}
-
-#botonEnviar{
-    background-color: #5ead3c;
-    border: none;
-    border-radius: 12px;
-    padding: 5px;
-}
-
-#seccionAdmin {
-    margin-top: 100px;
-    padding: 20px;
+    display: block;
+    margin: 35px auto;
 }
