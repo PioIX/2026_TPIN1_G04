@@ -84,7 +84,9 @@ class UserInterface {
         document.getElementById("seccionRegistro").style.display = "none";
         document.getElementById("seccionInicioSesion").style.display = "none";
         document.getElementById("home").style.display = "none";
+        document.getElementById("hrefs").style.display = "none";
         document.getElementById("seccionAdmin").style.display = "none";
+        posicionarLetras()
     }
 
 

@@ -189,15 +189,33 @@ button, a{
 .container {
     display: flex;
     flex-direction: column;
+    width: 500px;
     align-items: center;
     justify-content: center;
     gap: 5px;
-    background-color: #ff7722;
-    border-radius: 10px;
+    background-color: #ff77005b;
+    border-radius: 25px;
     padding: 10px, 20px;
+    border: 2px solid ff7722;
 }
+
+
 /* Pantalla admin */
 #seccionAdmin {
     margin-top: 100px;
     padding: 20px;
+}
+
+#letras {
+    position: relative;
+    width: 500px;
+    height: 500px;
+}
+
+#letras p {
+    margin: 0;  /* el <p> que envuelve los spans no debe empujar nada */
+}
+
+.letra {
+    position: absolute;
 }
