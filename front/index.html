@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>2026_TPIN1_G04</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Arimo:ital,wght@0,400..700;1,400..700&family=Chau+Philomene+One:ital@0;1&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Patrick+Hand&family=Pixelify+Sans:wght@400..700&family=Rock+Salt&family=Spectral+SC:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Arimo:ital,wght@0,400..700;1,400..700&family=Chau+Philomene+One:ital@0;1&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Patrick+Hand&family=Pixelify+Sans:wght@400..700&family=Rock+Salt&family=Spectral+SC:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
     <div id="paginaPrincipal">
@@ -48,27 +52,81 @@
             <input type="password" id="passwordLogin">
         </div>
 
-        <button id = "botonInicioSesion" onclick="login()">NEXT</button>
+        <button id="botonInicioSesion" onclick="login()">NEXT</button>
     </div>
 
-    <div id="seccionJuego" style="display: none;">
-        <div id="letras">
-            
-        </div>
-        <div id="pregunta">
+    <div id="home" style="display: none;">
+        <button id="botonEmpezar" onclick="ui.mostrarJuego()">¡Ir al juego!</button>
+        <!-- Acá se van a ver otros datos como...
+        - Tabla de posiciones 
+        - Historial / Estadísticas: Cuántos roscos completó, récord de tiempo, etc -->
+    </div>
 
+
+    <div id="seccionJuego" class="rosco" style="display: none;">
+        <button id="iniciarJuego" onclick="inicializarJuego()">START</button>
+        <div id="letras">
+            <p>
+                <span id="letra-A" class="letra pendiente">A</span>
+                <span id="letra-B" class="letra pendiente">B</span>
+                <span id="letra-C" class="letra pendiente">C</span>
+                <span id="letra-D" class="letra pendiente">D</span>
+                <span id="letra-E" class="letra pendiente">E</span>
+                <span id="letra-F" class="letra pendiente">F</span>
+                <span id="letra-G" class="letra pendiente">G</span>
+                <span id="letra-H" class="letra pendiente">H</span>
+                <span id="letra-I" class="letra pendiente">I</span>
+                <span id="letra-J" class="letra pendiente">J</span>
+                <span id="letra-K" class="letra pendiente">K</span>
+                <span id="letra-L" class="letra pendiente">L</span>
+                <span id="letra-M" class="letra pendiente">M</span>
+                <span id="letra-N" class="letra pendiente">N</span>
+                <span id="letra-Ñ" class="letra pendiente">Ñ</span>
+                <span id="letra-O" class="letra pendiente">O</span>
+                <span id="letra-P" class="letra pendiente">P</span>
+                <span id="letra-Q" class="letra pendiente">Q</span>
+                <span id="letra-R" class="letra pendiente">R</span>
+                <span id="letra-S" class="letra pendiente">S</span>
+                <span id="letra-T" class="letra pendiente">T</span>
+                <span id="letra-U" class="letra pendiente">U</span>
+                <span id="letra-V" class="letra pendiente">V</span>
+                <span id="letra-W" class="letra pendiente">W</span>
+                <span id="letra-X" class="letra pendiente">X</span>
+                <span id="letra-Y" class="letra pendiente">Y</span>
+                <span id="letra-Z" class="letra pendiente">Z</span>
+            </p>
         </div>
+        <div id="letra_y_condicion">
+            <p id="textoLetraActual">Letra actual: </p>
+            <p id="textoCondicion">Condición: </p>
+        </div>
+
+        <div id="pregunta">
+            <p id="textoPregunta">Aquí aparecerá la consigna cuando el juego comience...</p>
+        </div>
+
         <input type="text" placeholder="Tu respuesta aquí">
+
         <button id="botonPasapalabra">PASAPALABRA</button>
         <button id="botonEnviar">ENVIAR</button>
+
+        <div class="container">
+            <h2>Tiempo</h2>
+            <p class="temporizador" id="temporizador">05:00</p>
+            <div>
+                <button id="frenar">Frenar juego</button>
+                <button id="pausa">Pausa</button>
+            </div>
+        </div>
+
     </div>
-    
+
     <div id="seccionAdmin" style="display: none;">
         <div>
             <h2>Usuarios</h2>
             <!--Traer Usuarios-->
             <h3>Traer usuarios</h3>
-            
+
             <table>
                 <thead>
                     <tr>
@@ -143,7 +201,7 @@
             </select>
             <input id="preguntaIngresada" type="text" placeholder="Ingrese la pregunta">
             <input id="respuestaIngresada" type="text" placeholder="Ingrese la respuesta">
-            
+
             <button onclick="agregarPregunta()">Agregar pregunta</button>
             <!--Eliminar pregunta-->
             <h3>Eliminar pregunta</h3>
@@ -151,7 +209,7 @@
             <button onclick="eliminarPregunta()">Eliminar pregunta</button>
             <!--Modificar pregunta-->
             <h3>Modificar pregunta</h3>
-            <select id="selectModificarDatosPreguntas"></select> 
+            <select id="selectModificarDatosPreguntas"></select>
             <select id="selectModificacionPreguntas">
                 <option value="id">Id</option>
                 <option value="letra">Letra</option>
@@ -169,4 +227,5 @@
     <script src="logic.js"></script>
 
 </body>
+
 </html>

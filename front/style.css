@@ -166,6 +166,80 @@ button, a{
     background-color: transparent;
     color: #ff914d;
     border: none;
-    display: block;
-    margin: 35px auto;
+    border-radius: 12px;
+    align-items: center;
+}
+
+/* Pantalla home */
+
+#home button {
+    font-size: 60px;
+    margin: 100px;
+    font-family: 'Pixelify sans', sans-serif;
+    background-color: transparent;
+    color: #ff914d;
+    border: none;
+    border-radius: 12px;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Pantalla juego */
+#seccionJuego {
+    margin-top: 100px;
+    padding: 20px;
+}
+
+#seccionJuego button {
+    font-size: 30px;
+    font-family: 'Archivo Black', sans-serif;
+    cursor: pointer;
+}
+
+#botonPasapalabra{
+    background-color: #f1da0a;
+    border: none;
+    border-radius: 12px;
+    padding: 5px;
+}
+
+#botonEnviar{
+    background-color: #5ead3c;
+    border: none;
+    border-radius: 12px;
+    padding: 5px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    background-color: #ff77005b;
+    border-radius: 25px;
+    padding: 10px, 20px;
+    border: 2px solid ff7722;
+}
+
+
+/* Pantalla admin */
+#seccionAdmin {
+    margin-top: 100px;
+    padding: 20px;
+}
+
+#letras {
+    position: relative;
+    width: 500px;
+    height: 500px;
+}
+
+#letras p {
+    margin: 0;  /* el <p> que envuelve los spans no debe empujar nada */
+}
+
+.letra {
+    position: absolute;
 }
