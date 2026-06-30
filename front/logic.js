@@ -1,6 +1,5 @@
-// // Variable que indica si la sesión está iniciada:
-// let user_log = 0
-
+// Variable que indica si la sesión está iniciada:
+let user_log = 0
 
 //     // Si el usuario NO existe y los datos están verificados que se cree la cuenta
 //     // ¿Cómo saber si no existe?
@@ -42,7 +41,7 @@ async function login() {
         user_log = usuarioEncontrado.id // Se coloca su id como usuario logueado
         console.log("Sesión iniciada, id:", user_log)
         alert("¡Bienvenido, " + usuarioEncontrado.usuario + "!")
-        ui.mostrarJuego()
+        ui.mostrarInicio()
     } else {
         alert("Usuario o contraseña incorrectos")
         return -1
@@ -77,6 +76,39 @@ async function newUser() {
         console.log("¡Se ha registrado con éxito!")
         ui.clearRegistroInputs() // Se vacían los inputs
     }
+}
+
+function posicionarLetras() {
+    const letras = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','Ñ','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+    const total = letras.length;
+    
+    const cx = 250;   // mitad de 500px
+    const cy = 250;
+    const radio = 200;
+
+    letras.forEach((letra, i) => {
+        const angulo = (2 * Math.PI * i / total) - Math.PI / 2;
+        const x = cx + radio * Math.cos(angulo);
+        const y = cy + radio * Math.sin(angulo);
+
+        const span = document.getElementById(`letra-${letra}`);
+        span.style.position = "absolute";
+        span.style.left = `${x}px`;
+        span.style.top = `${y}px`;
+        span.style.transform = "translate(-50%, -50%)";
+    });
+}
+
+function inicializarJuego() {
+    ui.temporizador().iniciarTemporizador()
+    
+    // Cuando apretás START debería ocurrir:
+
+    // Aparece la primera pregunta
+    // Se habilita el input para escribir la respuesta
+    // Se habilitan los botones de ENVIAR y PASAPALABRA
+
+
 }
 
 // async function agregarLetras(){
