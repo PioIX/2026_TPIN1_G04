@@ -54,6 +54,8 @@ class UserInterface {
     mostrarRegistro() {
         document.getElementById("seccionInicioSesion").style.display = "none";
         document.getElementById("seccionRegistro").style.display = "block";
+        document.getElementById("seccionJuego").style.display = "none";
+
     }
 
     mostrarLogin() {
@@ -67,12 +69,26 @@ class UserInterface {
     }
 
     // Muestra la pantalla del juego
+    mostrarInicio() {
+        document.getElementById("home").style.display = "block";
+        document.getElementById("paginaPrincipal").style.display = "none";
+        document.getElementById("seccionRegistro").style.display = "none";
+        document.getElementById("seccionInicioSesion").style.display = "none";
+        document.getElementById("seccionJuego").style.display = "none";
+        document.getElementById("seccionAdmin").style.display = "none";
+    }
+
     mostrarJuego() {
         document.getElementById("seccionJuego").style.display = "block";
+        document.getElementById("paginaPrincipal").style.display = "none";
+        document.getElementById("seccionRegistro").style.display = "none";
         document.getElementById("seccionInicioSesion").style.display = "none";
+        document.getElementById("home").style.display = "none";
         document.getElementById("hrefs").style.display = "none";
-        mostrarLetras()
+        document.getElementById("seccionAdmin").style.display = "none";
+        posicionarLetras()
     }
+
 
     // Muestra u oculta la pantalla de administrador
     mostrarAdmin(visible) {
@@ -89,62 +105,115 @@ class UserInterface {
 
 
     //Obtiene la informacion de los inputs de la seccion admin
-    getUser(){
+    getUser() {
         return document.getElementById("usuarioIngresado").value
     }
-    getClave(){
+    getClave() {
         return document.getElementById("claveIngresada").value
     }
-    getEmail(){
+    getEmail() {
         return document.getElementById("emailIngresado").value
     }
-    getEsAdmin(){
+    getEsAdmin() {
         return document.getElementById("adminIngresado").value
     }
 
     //Obtiene la informacion del select de USUARIOS de la seccion de admin
-    getSelectUser(){
+    getSelectUser() {
         return document.getElementById("selectUser").value
     }
     //Obtiene la informacion del select de USUARIOS de modificar datos
 
-    getModificarDatos(){
+    getModificarDatos() {
         return document.getElementById("selectModificarDatos").value
     }
-    getSelectModificacion(){
+    getSelectModificacion() {
         return document.getElementById("selectModificacion").value
     }
-    getNuevoValor(){
+    getNuevoValor() {
         return document.getElementById("valoraModificar").value
     }
     //Obtiene la informacion de los inputs de PREGUNTAS de la seccion de admin
-    getLetra(){
+    getLetra() {
         return document.getElementById("letraIngresada").value
     }
-    getCondicion(){
+    getCondicion() {
         return document.getElementById("condicionIngresada").value
     }
-    getPregunta(){
+    getPregunta() {
         return document.getElementById("preguntaIngresada").value
     }
-    getRespuesta(){
+    getRespuesta() {
         return document.getElementById("respuestaIngresada").value
     }
     //Obtiene la informacion del select de PREGUNTAS de la seccion de admin
-    getSelectPreguntas(){
+    getSelectPreguntas() {
         return document.getElementById("selectPreguntas").value
     }
     //Obtiene la informacion del select de PREGUNTAS de modificar datos
-    getModificarDatosPreguntas(){
+    getModificarDatosPreguntas() {
         return document.getElementById("selectModificarDatosPreguntas").value
     }
-    getSelectModificacionPreguntas(){
+    getSelectModificacionPreguntas() {
         return document.getElementById("selectModificacionPreguntas").value
     }
-    getNuevoValorPregunta(){
+    getNuevoValorPregunta() {
         return document.getElementById("valoraModificarPregunta").value
     }
-    
+
+    // Juego
+
+    temporizador() {
+    const frenar = document.getElementById("frenar");
+    const pausa = document.getElementById("pausa");
+    const temporizador = document.getElementById("temporizador");
+
+    let tiempoRestante = 300;
+    let intervalo;
+    let pausado = false;
+
+    function actualizarTiempo() {
+        const minutos = Math.floor(tiempoRestante / 60);
+        const segundos = tiempoRestante % 60;
+        temporizador.innerHTML = `${String(minutos).padStart(2, "0")}:${String(segundos).padStart(2, "0")}`;
+    }
+
+    function iniciarTemporizador() {
+        intervalo = setInterval(() => {
+            tiempoRestante--;
+            actualizarTiempo();
+            if (tiempoRestante === 0) {
+                clearInterval(intervalo);
+                alert("¡Se acabó el tiempo!");
+            }
+        }, 1000);
+    }
+
+    function frenarTemporizador() {
+        clearInterval(intervalo);
+        tiempoRestante = 300;
+        pausado = false;
+        pausa.textContent = "Pausa";
+        actualizarTiempo();
+    }
+
+    function pausarTemporizador() {
+        if (!pausado) {
+            clearInterval(intervalo);
+            pausado = true;
+            pausa.textContent = "Reanudar";
+        } else {
+            iniciarTemporizador();
+            pausado = false;
+            pausa.textContent = "Pausa";
+        }
+    }
+
+    frenar.onclick = frenarTemporizador;
+    pausa.onclick = pausarTemporizador;
+
+    return { iniciarTemporizador };
+}
 }
 
 const ui = new UserInterface();
