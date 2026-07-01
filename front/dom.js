@@ -161,6 +161,21 @@ class UserInterface {
         return document.getElementById("valoraModificarPregunta").value
     }
 
+    //Obtiene la informacion del select de PARTIDAS de la seccion de admin
+    getSelectPartidas() {
+        return document.getElementById("selectPartidas").value
+    }
+    //Obtiene la informacion del select de PARTIDAS de modificar datos
+    selectModificarDatosPartidas(){
+        return document.getElementById("selectModificarDatosPartidas").value
+    }
+    selectModificacionPartidas(){
+        return document.getElementById("selectModificacionPartidas").value
+    }
+    getNuevoValorPartida(){
+        return document.getElementById("valoraModificarPartidas").value
+    }
+
     // Juego
 
     temporizador() {

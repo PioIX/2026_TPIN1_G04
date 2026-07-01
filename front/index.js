@@ -248,4 +248,78 @@ async function modificarPregunta(){
     }
 }
 
+//PARTIDAS ADMIN
+async function llamadoAlGetPartidas() {
+    //fetch de la tabla partidas
+    const respuesta = await fetch('http://localhost:4000/partidas',{
+        method:"GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    })
+    let resultPartidas = await respuesta.json()
+    let tablaPartidas = document.getElementById("tablaPartidas")
+    let selectPartidas = document.getElementById("selectPartidas")
+    //llena la tabla preguntas
+    if(tablaPartidas){
+        tablaPartidas.innerHTML = ""
+        for(let i = 0; i < resultPartidas.length; i++){ 
+            tablaPartidas.innerHTML += `
+                <tr>
+                    <td>${resultPartidas[i].id}</td> 
+                    <td>${resultPartidas[i].usuario}</td>
+                    <td>${resultPartidas[i].puntos}</td>
+                </tr>
+            `
+            //Llena el select con las partidas
+            selectPartidas.innerHTML = "" 
+            for(let i = 0; i < resultPartidas.length; i++){
+                selectPartidas.innerHTML += `
+                    <option value="${resultPartidas[i].id}">${resultPartidas[i].usuario}</option>
+                `
+            }
+        }
+        
+    }
+}
 
+async function eliminarPartidas(){
+    let dato = ui.getSelectPartidas() //agarra el dato del select
+    try{
+        let response = await fetch("http://localhost:4000/partidas",{
+            method: "DELETE",
+            headers: {
+                "Content-Type":"application/json",
+            },
+            body: JSON.stringify({ id: dato }) //convierte los datos en json y los manda al back
+        })
+        let result = await response.json()
+        console.log(result)
+        llamadoAlGetPartidas()
+    }catch(error){
+        return("Hubo un error")
+    }
+}
+
+
+async function modificarPartidas(){
+    let datos = { // obtiene los datos de los inputs y selects
+        id: ui.getModificarDatosPartidas(),
+        modificacion: ui.getSelectModificacionPartidas(),
+        valor: ui.getNuevoValorPartidas()
+    }
+    try{
+        let response = await fetch("http://localhost:4000/partidas",{
+            method: "PUT",
+            headers: {
+                "Content-Type":"application/json",
+            },
+            body: JSON.stringify(datos) 
+        })
+        let result = await response.json()
+        console.log(result)
+        llamadoAlGetPartidas()
+    }catch(error){
+        return ("Hubo un error")
+    }
+}
