@@ -47,9 +47,9 @@
 
         <div class="login">
             <p>Ingrese su nombre de usuario</p>
-            <input type="text" id="usuarioLogin">
+            <input type="text" id="usuarioLogin" placeholder="Nombre de usuario">
             <p>Ingrese su contraseña</p>
-            <input type="password" id="passwordLogin">
+            <input type="password" id="passwordLogin" placeholder="Contraseña">
         </div>
 
         <button id="botonInicioSesion" onclick="login()">NEXT</button>
@@ -219,6 +219,36 @@
             </select>
             <input id="valoraModificarPregunta" type="text" placeholder="Ingrese el nuevo dato">
             <button onclick="modificarPregunta()">Modificar pregunta</button>
+        </div>
+        <div>
+            <h2>Partidas</h2>
+            <h3>Traer partidas</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>usuario</th>
+                        <th>puntos</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaPartidas">
+                </tbody>
+            </table>
+            <button onclick="llamadoAlGetPartidas()">Traer partidas</button>
+
+            <h3>Eliminar partidas</h3>
+            <select id="selectPartida"></select>
+            <button onclick="eliminarPartida()">Eliminar partida</button>
+            
+            <h3>Modificar partida</h3>
+            <select id="selectModificarDatosPartidas"></select>
+            <select id="selectModificacionPartidas">
+                <option value="id">Id</option>
+                <option value="usuario">Usuario</option>
+                <option value="puntos">Puntos</option>
+            </select>
+            <input id="valoraModificarPartidas" type="text" placeholder="Ingrese el nuevo dato">
+            <button onclick="modificarPartidas()">Modificar partida</button>
         </div>
     </div>
 
