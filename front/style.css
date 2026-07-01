@@ -45,11 +45,30 @@ button, a{
 
 /* Pantalla principal */
 
+
 #paginaPrincipal{
-    margin-top: 180px;
-    margin-left: 140px;
+    position: relative;    /* NUEVO: Permite que la imagen se acomode detrás */
+    padding: 100px;
+    width: 100;            /* Ajusta este ancho según qué tan grande quieras la sección */
+    height: 500px;         /* NUEVO: Necesitamos darle una altura fija o mínima para contener todo */
+    
+    /* Flexbox para alinear el texto y el botón al centro de la imagen */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start; /* Alinea el texto y botón a la izquierda. Cambia a 'center' si los quieres en el medio */
+    gap: 20px;
 }
 
+#paginaPrincipal img{
+    position: absolute;    /* NUEVO: Saca la imagen del flujo para que no empuje el texto */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 770px;
+    object-fit: cover;     /* NUEVO: Hace que la imagen cubra todo el fondo sin deformarse */
+    z-index: 1;
+}
 #paginaPrincipal h1 {
     font-size: 90px;
     color: black;
@@ -64,6 +83,8 @@ button, a{
     background-color: transparent;
     color: #ff914d;
     border: none;
+    position: relative;
+    z-index: 10;
 }
 
 /* Registro */
@@ -100,7 +121,7 @@ button, a{
     height: 45px;
     border: none;
     border-radius: 25px;
-    background-color: #d7ded8;
+    background-color: #fffdf5;
     padding-left: 15px;
     font-size: 18px;
     margin-bottom: 22px;
@@ -152,7 +173,7 @@ button, a{
     height: 45px;
     border: none;
     border-radius: 25px;
-    background-color: #d7ded8;
+    background-color: #fffdf5;
     padding-left: 15px;
     font-size: 18px;
     margin-bottom: 22px;
@@ -168,6 +189,7 @@ button, a{
     border: none;
     border-radius: 12px;
     align-items: center;
+    margin: 35px auto;
 }
 
 /* Pantalla home */
@@ -184,23 +206,37 @@ button, a{
     justify-content: center;
 }
 
-/* Pantalla juego */
+#iniciarJuego {
+    font-size: 60px;
+    margin: 30px;
+    font-family: 'Pixelify Sans', sans-serif; 
+    background-color: transparent;
+    color: #ff914d;
+    cursor: pointer; 
+    border: none;
+}
+
 #seccionJuego {
     margin-top: 100px;
     padding: 20px;
+
+}
+#seccionJuego p{
+    font-family: 'Open Sans', sans-serif;
+    
 }
 
-#seccionJuego button {
-    font-size: 30px;
-    font-family: 'Archivo Black', sans-serif;
-    cursor: pointer;
-}
+
 
 #botonPasapalabra{
     background-color: #f1da0a;
     border: none;
     border-radius: 12px;
     padding: 5px;
+    width: 30%;
+    height: 10%;
+    gap: 10px;
+    font-family: 'Archivo Black', sans-serif;
 }
 
 #botonEnviar{
@@ -208,19 +244,89 @@ button, a{
     border: none;
     border-radius: 12px;
     padding: 5px;
+    width: 20%;
+    height: 10%;
+    border: none;
+    font-family: 'Archivo Black', sans-serif;
+
 }
 
 .container {
     display: flex;
     flex-direction: column;
-    width: 500px;
+    width: 400px;
     align-items: center;
     justify-content: center;
-    gap: 5px;
-    background-color: #ff77005b;
+
+    background-color: #f8be92;
     border-radius: 25px;
-    padding: 10px, 20px;
-    border: 2px solid ff7722;
+    padding: 5px, 10px;
+    border: 2px solid #ff7722;
+}
+.container h2{
+    font-family: 'Chau Philomene', sans-serif;
+}
+
+#contenedorBotones{
+    display: flex;
+    flex-direction: row;    
+    justify-content: center; 
+    align-items: center;    
+    gap: 15px;     
+    width: 70% !important;
+    height: 20%;
+}
+
+#frenar{
+    background-color: #ff751f;
+    border: none;
+    border-radius: 12px;
+    padding: 10px;
+    border: none;
+    font-family: 'Archivo Black', sans-serif
+}
+
+#pausa{
+    background-color: #ff751f;
+    border: none;
+    border-radius: 12px;
+    padding: 10px;
+    
+    border: none;
+    font-family: 'Archivo Black', sans-serif
+}
+#inputRespuesta{   
+    width: 96%;
+    height: 45px;
+    border: none;
+    border-radius: 25px;
+    background-color: #fffdf5;
+    padding-left: 15px;
+    font-size: 18px;
+    margin-bottom: 22px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+#flex {
+    display: flex;
+}
+
+#letras {
+    position: relative;
+    width: 500px;
+    height: 500px;
+    
+}
+
+#letras p {
+    margin: 0;  /* el <p> que envuelve los spans no debe empujar nada */
+}
+
+.letraPendiente {
+    position: absolute;
+    background-color: #f8be92;
+    border-radius: 30px;
+    padding: 8px;
 }
 
 
@@ -228,18 +334,4 @@ button, a{
 #seccionAdmin {
     margin-top: 100px;
     padding: 20px;
-}
-
-#letras {
-    position: relative;
-    width: 500px;
-    height: 500px;
-}
-
-#letras p {
-    margin: 0;  /* el <p> que envuelve los spans no debe empujar nada */
-}
-
-.letra {
-    position: absolute;
 }

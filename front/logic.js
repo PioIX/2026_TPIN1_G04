@@ -99,8 +99,14 @@ function posicionarLetras() {
     });
 }
 
-function inicializarJuego() {
+async function inicializarJuego() {
     ui.temporizador().iniciarTemporizador()
+    let listaPreguntas = await llamadoAlGetPreguntas()
+
+    for (let i = 0; i < listaPreguntas.length; i++) {
+
+        document.getElementById("textoLetraActual").innerHTML = "Letra actual: " + listaPreguntas[i].letra
+    }
     
     // Cuando apretás START debería ocurrir:
 
@@ -118,3 +124,4 @@ function inicializarJuego() {
 //         let letras = tabla[i].letra
 //     }
 // }
+

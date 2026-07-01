@@ -228,6 +228,7 @@ class UserInterface {
     pausa.onclick = pausarTemporizador;
 
     return { iniciarTemporizador };
+    
 }
 }
 
