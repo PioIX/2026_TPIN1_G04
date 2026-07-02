@@ -230,6 +230,10 @@ class UserInterface {
     return { iniciarTemporizador };
     
 }
+
+    getInputRespuesta() {
+        return document.getElementById("inputRespuesta").value
+    }
 }
 
 const ui = new UserInterface();

@@ -98,23 +98,39 @@ function posicionarLetras() {
         span.style.transform = "translate(-50%, -50%)";
     });
 }
-
+let indicePregunta = 0;
+let listaPreguntas = [];
 async function inicializarJuego() {
     ui.temporizador().iniciarTemporizador()
-    let listaPreguntas = await llamadoAlGetPreguntas()
+    let respuestaBD = await llamadoAlGetPreguntas()
+    listaPreguntas = respuestaBD.data || respuestaBD || []; 
+    indicePregunta = 0;
 
-    for (let i = 0; i < listaPreguntas.length; i++) {
-
-        document.getElementById("textoLetraActual").innerHTML = "Letra actual: " + listaPreguntas[i].letra
+    if (listaPreguntas.length > 0) {
+        // Ocultamos el botón START para que no lo vuelvan a tocar
+        document.getElementById("iniciarJuego").style.display = "none";
+        
+        // Llamamos a una función que dibuja LA PREGUNTA ACTUAL
+        actualizarPreguntas();
     }
     
-    // Cuando apretás START debería ocurrir:
+}
 
-    // Aparece la primera pregunta
-    // Se habilita el input para escribir la respuesta
-    // Se habilitan los botones de ENVIAR y PASAPALABRA
+function actualizarPreguntas() {
+    let preguntaActual = listaPreguntas[indicePregunta];
+    document.getElementById("textoLetraActual").innerHTML = "Letra actual: " + preguntaActual.letra;
+    document.getElementById("textoCondicion").innerHTML = "Condición: " + preguntaActual.condicion;
+    document.getElementById("textoPregunta").innerHTML = preguntaActual.pregunta;
+}
 
-
+async function enviarRespuesta(){
+    respuestaUsuario = ui.getInputRespuesta()
+    let respuestaBD = await llamadoAlGetPreguntas()
+    listaPreguntas = respuestaBD.data || respuestaBD || []; 
+    let letraActual = preguntaActual.letra.toUpperCase();
+    if(respuestaUsuario ==  listaPreguntas[i].respuesta){
+        document.getElementById("letra-${letraActual}").style.color = "green"
+    }
 }
 
 // async function agregarLetras(){

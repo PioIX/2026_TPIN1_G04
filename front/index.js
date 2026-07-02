@@ -174,6 +174,8 @@ async function llamadoAlGetPreguntas(datos){
         }
         
     }
+    
+    return resultPregunta
 }
 
 async function llamadoalPostPreguntas(datos){
