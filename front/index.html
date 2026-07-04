@@ -111,8 +111,9 @@
                 </div>
 
                 <input id="inputRespuesta" type="text" placeholder="Tu respuesta aquí">
+                <p><span id="respuestaCorrectaJuego"></span></p>
 
-                <button id="botonPasapalabra">PASAPALABRA</button>
+                <button id="botonPasapalabra" onclick="pasapalabra()">PASAPALABRA</button>
                 <button id="botonEnviar" onclick="enviarRespuesta()">ENVIAR</button>
 
                 <div class="container">
@@ -264,7 +265,6 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 id="modalTitle">Modal title</h5>
-                <button type="button" class="btn-close" onclick="ui.hideModal()">×</button>
             </div>
             <div class="modal-body">
                 <p id="modalBody">Modal body text goes here.</p>

@@ -135,10 +135,11 @@ function enviarRespuesta() {
     let respuestaCorrecta = preguntaActual.respuesta.trim().toLowerCase();
 
     if (respuestaUsuario === respuestaCorrecta) {
-        document.getElementById(`letra-${letraActual}`).style.color = "green";
+        document.getElementById(`letra-${letraActual}`).style.backgroundColor = "green";
         ui.clearJuegoInput()
     } else {
-        document.getElementById(`letra-${letraActual}`).style.color = "red";
+        document.getElementById(`letra-${letraActual}`).style.backgroundColor = "red";
+        document.getElementById("respuestaCorrectaJuego").innerHTML = "La respuesta correcta era: " + respuestaCorrecta
     }
 
     indicePregunta++;
@@ -149,11 +150,20 @@ function enviarRespuesta() {
     }
 }
 
-// async function agregarLetras(){
-//     let tabla = await llamadoAlGetPreguntas()
-    
-//     for(i= 0; i < tabla.length; i++){ //Trae las letras de la BD
-//         let letras = tabla[i].letra
-//     }
-// }
+function pasapalabra() {
+    if (listaPreguntas.length <= 1) return; // si queda una sola, no tiene sentido pasarla
 
+    let preguntaActual = listaPreguntas[indicePregunta];
+    let letraActual = preguntaActual.letra.toUpperCase();
+
+    document.getElementById(`letra-${letraActual}`).style.backgroundColor = "yellow";
+
+    // Sacamos la pregunta actual de su posición...
+    listaPreguntas.splice(indicePregunta, 1);
+    // ...y la mandamos al final del array, para volver a esta después
+    listaPreguntas.push(preguntaActual);
+
+    if (indicePregunta >= listaPreguntas.length) indicePregunta = 0;
+
+    actualizarPreguntas();
+}
