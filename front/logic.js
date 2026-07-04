@@ -38,10 +38,11 @@ async function login() {
         }
     }
     if (usuarioEncontrado) {
+        ui.showModal("¡Bienvenido, " + usuarioEncontrado.usuario + "!", "¡Disfruta del juego!")
         user_log = usuarioEncontrado.id // Se coloca su id como usuario logueado
         console.log("Sesión iniciada, id:", user_log)
-        alert("¡Bienvenido, " + usuarioEncontrado.usuario + "!")
         ui.mostrarInicio()
+
     } else {
         alert("Usuario o contraseña incorrectos")
         return -1
@@ -98,8 +99,10 @@ function posicionarLetras() {
         span.style.transform = "translate(-50%, -50%)";
     });
 }
+
 let indicePregunta = 0;
 let listaPreguntas = [];
+
 async function inicializarJuego() {
     ui.temporizador().iniciarTemporizador()
     let respuestaBD = await llamadoAlGetPreguntas()
@@ -113,8 +116,9 @@ async function inicializarJuego() {
         // Llamamos a una función que dibuja LA PREGUNTA ACTUAL
         actualizarPreguntas();
     }
-    
+ 
 }
+
 
 function actualizarPreguntas() {
     let preguntaActual = listaPreguntas[indicePregunta];
@@ -123,13 +127,25 @@ function actualizarPreguntas() {
     document.getElementById("textoPregunta").innerHTML = preguntaActual.pregunta;
 }
 
-async function enviarRespuesta(){
-    respuestaUsuario = ui.getInputRespuesta()
-    let respuestaBD = await llamadoAlGetPreguntas()
-    listaPreguntas = respuestaBD.data || respuestaBD || []; 
+function enviarRespuesta() {
+    let preguntaActual = listaPreguntas[indicePregunta];
     let letraActual = preguntaActual.letra.toUpperCase();
-    if(respuestaUsuario ==  listaPreguntas[i].respuesta){
-        document.getElementById("letra-${letraActual}").style.color = "green"
+
+    let respuestaUsuario = ui.getInputRespuesta().trim().toLowerCase();
+    let respuestaCorrecta = preguntaActual.respuesta.trim().toLowerCase();
+
+    if (respuestaUsuario === respuestaCorrecta) {
+        document.getElementById(`letra-${letraActual}`).style.color = "green";
+        ui.clearJuegoInput()
+    } else {
+        document.getElementById(`letra-${letraActual}`).style.color = "red";
+    }
+
+    indicePregunta++;
+    if (indicePregunta <= listaPreguntas.length) {
+        actualizarPreguntas();
+    } else {
+        alert("¡Terminaste el rosco!");
     }
 }
 
