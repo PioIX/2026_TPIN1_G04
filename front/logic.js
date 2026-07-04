@@ -38,10 +38,11 @@ async function login() {
         }
     }
     if (usuarioEncontrado) {
+        ui.showModal("¡Bienvenido, " + usuarioEncontrado.usuario + "!", "¡Disfruta del juego!")
         user_log = usuarioEncontrado.id // Se coloca su id como usuario logueado
         console.log("Sesión iniciada, id:", user_log)
-        alert("¡Bienvenido, " + usuarioEncontrado.usuario + "!")
         ui.mostrarInicio()
+
     } else {
         alert("Usuario o contraseña incorrectos")
         return -1
@@ -98,8 +99,10 @@ function posicionarLetras() {
         span.style.transform = "translate(-50%, -50%)";
     });
 }
+
 let indicePregunta = 0;
 let listaPreguntas = [];
+
 async function inicializarJuego() {
     ui.temporizador().iniciarTemporizador()
     let respuestaBD = await llamadoAlGetPreguntas()
@@ -113,8 +116,9 @@ async function inicializarJuego() {
         // Llamamos a una función que dibuja LA PREGUNTA ACTUAL
         actualizarPreguntas();
     }
-    
+ 
 }
+
 
 function actualizarPreguntas() {
     let preguntaActual = listaPreguntas[indicePregunta];
@@ -123,21 +127,43 @@ function actualizarPreguntas() {
     document.getElementById("textoPregunta").innerHTML = preguntaActual.pregunta;
 }
 
-async function enviarRespuesta(){
-    respuestaUsuario = ui.getInputRespuesta()
-    let respuestaBD = await llamadoAlGetPreguntas()
-    listaPreguntas = respuestaBD.data || respuestaBD || []; 
+function enviarRespuesta() {
+    let preguntaActual = listaPreguntas[indicePregunta];
     let letraActual = preguntaActual.letra.toUpperCase();
-    if(respuestaUsuario ==  listaPreguntas[i].respuesta){
-        document.getElementById("letra-${letraActual}").style.color = "green"
+
+    let respuestaUsuario = ui.getInputRespuesta().trim().toLowerCase();
+    let respuestaCorrecta = preguntaActual.respuesta.trim().toLowerCase();
+
+    if (respuestaUsuario === respuestaCorrecta) {
+        document.getElementById(`letra-${letraActual}`).style.backgroundColor = "green";
+        ui.clearJuegoInput()
+    } else {
+        document.getElementById(`letra-${letraActual}`).style.backgroundColor = "red";
+        document.getElementById("respuestaCorrectaJuego").innerHTML = "La respuesta correcta era: " + respuestaCorrecta
+    }
+
+    indicePregunta++;
+    if (indicePregunta <= listaPreguntas.length) {
+        actualizarPreguntas();
+    } else {
+        alert("¡Terminaste el rosco!");
     }
 }
 
-// async function agregarLetras(){
-//     let tabla = await llamadoAlGetPreguntas()
-    
-//     for(i= 0; i < tabla.length; i++){ //Trae las letras de la BD
-//         let letras = tabla[i].letra
-//     }
-// }
+function pasapalabra() {
+    if (listaPreguntas.length <= 1) return; // si queda una sola, no tiene sentido pasarla
 
+    let preguntaActual = listaPreguntas[indicePregunta];
+    let letraActual = preguntaActual.letra.toUpperCase();
+
+    document.getElementById(`letra-${letraActual}`).style.backgroundColor = "yellow";
+
+    // Sacamos la pregunta actual de su posición...
+    listaPreguntas.splice(indicePregunta, 1);
+    // ...y la mandamos al final del array, para volver a esta después
+    listaPreguntas.push(preguntaActual);
+
+    if (indicePregunta >= listaPreguntas.length) indicePregunta = 0;
+
+    actualizarPreguntas();
+}

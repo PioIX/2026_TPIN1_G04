@@ -106,17 +106,19 @@
                 </div>
 
                 <div id="pregunta">
-                    <p style="font-weight: bold;" id="textoPregunta">Aquí aparecerá la consigna cuando el juego comience...</p>
+                    <p style="font-weight: bold;" id="textoPregunta">Aquí aparecerá la consigna cuando el juego
+                        comience...</p>
                 </div>
 
                 <input id="inputRespuesta" type="text" placeholder="Tu respuesta aquí">
+                <p><span id="respuestaCorrectaJuego"></span></p>
 
-                <button id="botonPasapalabra">PASAPALABRA</button>
-                <button id="botonEnviar">ENVIAR</button>
+                <button id="botonPasapalabra" onclick="pasapalabra()">PASAPALABRA</button>
+                <button id="botonEnviar" onclick="enviarRespuesta()">ENVIAR</button>
 
                 <div class="container">
-                    <h2>Tiempo</h2>
-                    <p class="temporizador" id="temporizador">05:00</p>
+                    <h2>Tiempo Restante</h2>
+                    <p class="temporizador" id="temporizador">03:00</p>
                     <div id="contenedorBotones">
                         <button id="frenar">Frenar juego</button>
                         <button id="pausa">Pausa</button>
@@ -257,6 +259,22 @@
             <button onclick="modificarPartidas()">Modificar partida</button>
         </div>
     </div>
+
+    <!-- ui.showModal() -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 id="modalTitle">Modal title</h5>
+            </div>
+            <div class="modal-body">
+                <p id="modalBody">Modal body text goes here.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" onclick="ui.hideModal()">¡Listo!</button>
+            </div>
+        </div>
+    </div>
+
 
     <script src="dom.js"></script>
     <script src="index.js"></script>
