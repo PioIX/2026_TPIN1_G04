@@ -1,6 +1,7 @@
 body {
     margin: 0;
     background-color: #ffd8bb;
+    overflow: hidden;
 }
 
 button, a{
@@ -46,50 +47,36 @@ button, a{
 
 /* Pantalla principal */
 
-
-#paginaPrincipal{
-    
-    margin-top: 360px;
-    margin-left: 300px;
-
-    /* Arreglar fondo */
-
-    background-image: url("imagenes/banner.jpg");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-
-    min-height: 100vh; 
-    width: 100%;
-
-    position: relative;    /* NUEVO: Permite que la imagen se acomode detrás */
-    padding: 100px;
-    width: 100;            /* Ajusta este ancho según qué tan grande quieras la sección */
-    height: 500px;         /* NUEVO: Necesitamos darle una altura fija o mínima para contener todo */
-    
-    /* Flexbox para alinear el texto y el botón al centro de la imagen */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start; /* Alinea el texto y botón a la izquierda. Cambia a 'center' si los quieres en el medio */
-    gap: 20px;
-}
-
-#paginaPrincipal img{
-    position: absolute;    /* NUEVO: Saca la imagen del flujo para que no empuje el texto */
+#paginaPrincipal {
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    height: 770px;
-    object-fit: cover;     /* NUEVO: Hace que la imagen cubra todo el fondo sin deformarse */
-    z-index: 1;
+    height: 100vh;
+    background-image: url("/front/Imagenes/Banner.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding-left: 100px;
+    z-index: 100;
 }
+
+#paginaPrincipal img {
+    display: none; /* Ocultamos la imagen porque usamos background-image */
+}
+
 #paginaPrincipal h1 {
-    
     font-size: 90px;
     color: black;
-    margin-bottom: 10px;
+    margin: 0;
+    margin-bottom: 30px;
     font-family: 'Chau Philomene One', sans-serif;
+    position: relative;
+    z-index: 10;
 }
 
 #paginaPrincipal button {
@@ -205,11 +192,7 @@ button, a{
     border: none;
     border-radius: 12px;
     align-items: center;
-
-    margin-top: 50px;
-
     margin: 35px auto;
-
 }
 
 /* Pantalla home */
@@ -237,114 +220,158 @@ button, a{
 }
 
 #seccionJuego {
-    margin-top: 100px;
-    padding: 20px;
+    margin-top: 80px;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
+    height: calc(100vh - 80px);
+    gap: 15px;
+    overflow: hidden;
+    padding-top: 20px;
+}
+
+#flex {
+    display: flex;
+    gap: 150px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 1400px;
+    overflow: hidden;
+    margin-top: 80px;
 }
 
 
-
-#botonPasapalabra{
-    background-color: #f1da0a;
-    border: none;
-    border-radius: 12px;
-    padding: 5px;
-    width: 30%;
-    height: 10%;
-    gap: 10px;
-    font-family: 'Archivo Black', sans-serif;
-}
-
-#botonEnviar{
-    background-color: #5ead3c;
-    border: none;
-    border-radius: 12px;
-    padding: 5px;
-    width: 20%;
-    height: 10%;
-    border: none;
-    font-family: 'Archivo Black', sans-serif;
-
-}
-
-.container {
+#botonesJuego {
     display: flex;
     flex-direction: column;
     width: 400px;
+    gap: 0;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
+    overflow: hidden;
+}
 
+
+#letra_y_condicion {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+#pregunta {
+    width: 100%;
+    margin-bottom: 15px;
     background-color: #f8be92;
     border-radius: 25px;
-    padding: 5px, 10px;
+    padding: 20px;
     border: 2px solid #ff7722;
-}
-.container h2{
-    font-family: 'Chau Philomene', sans-serif;
+    box-sizing: border-box;
 }
 
-#contenedorBotones{
-    display: flex;
-    flex-direction: row;    
-    justify-content: center; 
-    align-items: center;    
-    gap: 15px;     
-    width: 70% !important;
-    height: 20%;
-}
-
-#frenar{
-    background-color: #ff751f;
-    border: none;
-    border-radius: 12px;
-    padding: 10px;
-    border: none;
-    font-family: 'Archivo Black', sans-serif
-}
-
-#pausa{
-    background-color: #ff751f;
-    border: none;
-    border-radius: 12px;
-    padding: 10px;
-    
-    border: none;
-    font-family: 'Archivo Black', sans-serif
-}
-#inputRespuesta{   
-    width: 96%;
+#inputRespuesta {   
+    width: 90%;
     height: 45px;
     border: none;
     border-radius: 25px;
     background-color: #fffdf5;
     padding-left: 15px;
     font-size: 18px;
-    margin-bottom: 22px;
+    margin-bottom: 15px;
     font-family: 'Open Sans', sans-serif;
 }
 
-#flex {
+#botonPasapalabra {
+    background-color: #f1da0a;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 20px;
+    width: 90%;
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+#botonEnviar {
+    background-color: #5ead3c;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 20px;
+    width: 90%;
+    font-family: 'Archivo Black', sans-serif;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 30px;
+}
+
+.container {
     display: flex;
-}
-
-#letras {
-    position: relative;
-    width: 500px;
-    height: 500px;
-    
-}
-
-#letras p {
-    margin: 0;  /* el <p> que envuelve los spans no debe empujar nada */
-}
-
-.letraPendiente {
-    position: absolute;
+    flex-direction: column;
+    width: 90%;
+    max-width: 450px;
+    gap: 15px;
+    align-items: center;
+    justify-content: center;
     background-color: #f8be92;
-    border-radius: 30px;
-    padding: 8px;
+    border-radius: 25px;
+    padding: 20px;
+    border: 2px solid #ff7722;
+    box-sizing: border-box;
 }
 
+#tiempoRestante {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+#tiempoRestante h2 {
+    margin: 0;
+    margin-bottom: 5px;
+    font-size: 18px;
+}
+
+#tiempoRestante .temporizador {
+    margin: 0;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+#contenedorBotones {
+    display: flex;
+    gap: 15px;     
+    width: 100%;
+    justify-content: center;
+}
+
+#frenar {
+    background-color: #ff751f;
+    border: none;
+    border-radius: 12px;
+    padding: 10px 15px;
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 14px;
+    color: white;
+    cursor: pointer;
+    flex: 1;
+}
+
+#pausa {
+    background-color: #ff751f;
+    border: none;
+    border-radius: 12px;
+    padding: 10px 15px;
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 14px;
+    color: white;
+    cursor: pointer;
+    flex: 1;
+}
 
 /* Pantalla admin */
 #seccionAdmin {
@@ -377,6 +404,7 @@ button, a{
     from { opacity: 0; }
     to { opacity: 1; }
 }
+
 .modal-content {
     width: 90%;
     max-width: 400px;
