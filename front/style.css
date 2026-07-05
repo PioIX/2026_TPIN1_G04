@@ -46,6 +46,7 @@ button, a{
 
 /* Pantalla principal */
 
+
 #paginaPrincipal{
     
     margin-top: 360px;
@@ -61,8 +62,28 @@ button, a{
     min-height: 100vh; 
     width: 100%;
 
+    position: relative;    /* NUEVO: Permite que la imagen se acomode detrás */
+    padding: 100px;
+    width: 100;            /* Ajusta este ancho según qué tan grande quieras la sección */
+    height: 500px;         /* NUEVO: Necesitamos darle una altura fija o mínima para contener todo */
+    
+    /* Flexbox para alinear el texto y el botón al centro de la imagen */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start; /* Alinea el texto y botón a la izquierda. Cambia a 'center' si los quieres en el medio */
+    gap: 20px;
 }
 
+#paginaPrincipal img{
+    position: absolute;    /* NUEVO: Saca la imagen del flujo para que no empuje el texto */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 770px;
+    object-fit: cover;     /* NUEVO: Hace que la imagen cubra todo el fondo sin deformarse */
+    z-index: 1;
+}
 #paginaPrincipal h1 {
     
     font-size: 90px;
@@ -78,6 +99,8 @@ button, a{
     background-color: transparent;
     color: #ff914d;
     border: none;
+    position: relative;
+    z-index: 10;
 }
 
 /* Registro */
@@ -114,7 +137,7 @@ button, a{
     height: 45px;
     border: none;
     border-radius: 25px;
-    background-color: #d7ded8;
+    background-color: #fffdf5;
     padding-left: 15px;
     font-size: 18px;
     margin-bottom: 22px;
@@ -166,7 +189,7 @@ button, a{
     height: 45px;
     border: none;
     border-radius: 25px;
-    background-color: #d7ded8;
+    background-color: #fffdf5;
     padding-left: 15px;
     font-size: 18px;
     margin-bottom: 22px;
@@ -182,7 +205,11 @@ button, a{
     border: none;
     border-radius: 12px;
     align-items: center;
+
     margin-top: 50px;
+
+    margin: 35px auto;
+
 }
 
 /* Pantalla home */
@@ -199,24 +226,33 @@ button, a{
     justify-content: center;
 }
 
-/* Pantalla juego */
+#iniciarJuego {
+    font-size: 60px;
+    margin: 30px;
+    font-family: 'Pixelify Sans', sans-serif; 
+    background-color: transparent;
+    color: #ff914d;
+    cursor: pointer; 
+    border: none;
+}
+
 #seccionJuego {
     margin-top: 100px;
     padding: 20px;
     align-items: center;
 }
 
-#seccionJuego button {
-    font-size: 30px;
-    font-family: 'Archivo Black', sans-serif;
-    cursor: pointer;
-}
+
 
 #botonPasapalabra{
     background-color: #f1da0a;
     border: none;
     border-radius: 12px;
     padding: 5px;
+    width: 30%;
+    height: 10%;
+    gap: 10px;
+    font-family: 'Archivo Black', sans-serif;
 }
 
 #botonEnviar{
@@ -224,19 +260,89 @@ button, a{
     border: none;
     border-radius: 12px;
     padding: 5px;
+    width: 20%;
+    height: 10%;
+    border: none;
+    font-family: 'Archivo Black', sans-serif;
+
 }
 
 .container {
     display: flex;
     flex-direction: column;
-    width: 500px;
+    width: 400px;
     align-items: center;
     justify-content: center;
-    gap: 5px;
-    background-color: #ff77005b;
+
+    background-color: #f8be92;
     border-radius: 25px;
-    padding: 10px, 20px;
-    border: 2px solid ff7722;
+    padding: 5px, 10px;
+    border: 2px solid #ff7722;
+}
+.container h2{
+    font-family: 'Chau Philomene', sans-serif;
+}
+
+#contenedorBotones{
+    display: flex;
+    flex-direction: row;    
+    justify-content: center; 
+    align-items: center;    
+    gap: 15px;     
+    width: 70% !important;
+    height: 20%;
+}
+
+#frenar{
+    background-color: #ff751f;
+    border: none;
+    border-radius: 12px;
+    padding: 10px;
+    border: none;
+    font-family: 'Archivo Black', sans-serif
+}
+
+#pausa{
+    background-color: #ff751f;
+    border: none;
+    border-radius: 12px;
+    padding: 10px;
+    
+    border: none;
+    font-family: 'Archivo Black', sans-serif
+}
+#inputRespuesta{   
+    width: 96%;
+    height: 45px;
+    border: none;
+    border-radius: 25px;
+    background-color: #fffdf5;
+    padding-left: 15px;
+    font-size: 18px;
+    margin-bottom: 22px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+#flex {
+    display: flex;
+}
+
+#letras {
+    position: relative;
+    width: 500px;
+    height: 500px;
+    
+}
+
+#letras p {
+    margin: 0;  /* el <p> que envuelve los spans no debe empujar nada */
+}
+
+.letraPendiente {
+    position: absolute;
+    background-color: #f8be92;
+    border-radius: 30px;
+    padding: 8px;
 }
 
 
@@ -246,17 +352,98 @@ button, a{
     padding: 20px;
 }
 
-#letras {
-    position: relative;
-    width: 500px;
-    height: 500px;
+/* showModal */
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 10, 14, 0.7);
+    backdrop-filter: blur(3px);
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
 }
 
-#letras p {
-    margin: 0;  /* el <p> que envuelve los spans no debe empujar nada */
+.modal.show {
+    display: flex;
+    animation: modalFadeIn 0.2s ease-out;
 }
 
 .letra {
     position: absolute;
 }
 
+@keyframes modalFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+.modal-content {
+    width: 90%;
+    max-width: 400px;
+    background: #fffdf5;
+    border-radius: 25px;
+    box-shadow: 12px 12px 0px black;
+    overflow: hidden;
+    animation: modalPopIn 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes modalPopIn {
+    from { transform: scale(0.9) translateY(15px); opacity: 0; }
+    to { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+.modal-header {
+    padding: 20px 24px;
+    background: #ff7722;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.modal-header h5 {
+    margin: 0;
+    font-family: 'Chau Philomene One', sans-serif;
+    font-size: 24px;
+    color: #000;
+}
+
+.btn-close {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: none;
+    background: #000;
+    color: #ff7722;
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.modal-body {
+    padding: 26px 24px;
+}
+
+.modal-body p {
+    margin: 0;
+    color: #000;
+    font-size: 18px;
+    font-family: 'Open Sans', sans-serif;
+    line-height: 1.5;
+}
+
+.modal-footer {
+    padding: 0 24px 24px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn-success {
+    padding: 12px 26px;
+    border-radius: 12px;
+    border: none;
+    background: #5ead3c;
+    color: #fff;
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 15px;
+    cursor: pointer;
+}

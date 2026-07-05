@@ -112,3 +112,35 @@ app.put('/preguntas', async function(req,res){
         res.status(500).json({ mensaje: "Hubo un error al modificar la pregunta"});
     }
 })
+
+//PARTIDAS
+app.get('/partidas', async function(req,res){
+    try{
+        let respuesta = await realizarQuery(`SELECT * FROM Partidas`)
+        res.send(respuesta)
+    }catch(error){
+        console.error("Error al traer las partidas:", error);
+        res.status(500).json({ mensaje: "Hubo un error al traer las partidas"});
+    }
+})
+
+app.delete('/partidas', async function(req,res){
+    try{
+        let respuesta = await realizarQuery(`DELETE FROM Partidas WHERE id = ${req.body.id}`)
+        res.json({ message: "Partida eliminada" })
+    }catch(error){
+        console.error("Error al eliminar la partida:", error);
+        res.status(500).json({ mensaje: "Hubo un error al eliminar la partida"});
+    }
+})
+
+//Se modifica una pregunta
+app.put('/partidas', async function(req,res){
+    try{
+        let respuesta = await realizarQuery(`UPDATE Partidas SET ${req.body.modificacion} = '${req.body.valor}' WHERE id = ${req.body.id}`)
+        res.json({ message: "Partida modificada" })
+    }catch(error){
+        console.error("Error al modificar partida:", error);
+        res.status(500).json({ mensaje: "Hubo un error al modificar la partida"});
+    }
+})
