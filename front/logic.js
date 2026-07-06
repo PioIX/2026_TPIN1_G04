@@ -110,15 +110,9 @@ async function inicializarJuego() {
     indicePregunta = 0;
 
     if (listaPreguntas.length > 0) {
-        // Ocultamos el botón START para que no lo vuelvan a tocar
-        document.getElementById("iniciarJuego").style.display = "none";
-        
-        // Llamamos a una función que dibuja LA PREGUNTA ACTUAL
         actualizarPreguntas();
     }
- 
 }
-
 
 function actualizarPreguntas() {
     let preguntaActual = listaPreguntas[indicePregunta];
