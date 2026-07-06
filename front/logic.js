@@ -38,10 +38,11 @@ async function login() {
         }
     }
     if (usuarioEncontrado) {
+        ui.showModal("¡Bienvenido, " + usuarioEncontrado.usuario + "!", "¡Disfruta del juego!")
         user_log = usuarioEncontrado.id // Se coloca su id como usuario logueado
         console.log("Sesión iniciada, id:", user_log)
-        alert("¡Bienvenido, " + usuarioEncontrado.usuario + "!")
         ui.mostrarInicio()
+
     } else {
         alert("Usuario o contraseña incorrectos")
         return -1
@@ -99,22 +100,70 @@ function posicionarLetras() {
     });
 }
 
-function inicializarJuego() {
+let indicePregunta = 0;
+let listaPreguntas = [];
+
+async function inicializarJuego() {
     ui.temporizador().iniciarTemporizador()
-    
-    // Cuando apretás START debería ocurrir:
+    let respuestaBD = await llamadoAlGetPreguntas()
+    listaPreguntas = respuestaBD.data || respuestaBD || []; 
+    indicePregunta = 0;
 
-    // Aparece la primera pregunta
-    // Se habilita el input para escribir la respuesta
-    // Se habilitan los botones de ENVIAR y PASAPALABRA
-
-
+    if (listaPreguntas.length > 0) {
+        // Ocultamos el botón START para que no lo vuelvan a tocar
+        document.getElementById("iniciarJuego").style.display = "none";
+        
+        // Llamamos a una función que dibuja LA PREGUNTA ACTUAL
+        actualizarPreguntas();
+    }
+ 
 }
 
-// async function agregarLetras(){
-//     let tabla = await llamadoAlGetPreguntas()
-    
-//     for(i= 0; i < tabla.length; i++){ //Trae las letras de la BD
-//         let letras = tabla[i].letra
-//     }
-// }
+
+function actualizarPreguntas() {
+    let preguntaActual = listaPreguntas[indicePregunta];
+    document.getElementById("textoLetraActual").innerHTML = "Letra actual: " + preguntaActual.letra;
+    document.getElementById("textoCondicion").innerHTML = "Condición: " + preguntaActual.condicion;
+    document.getElementById("textoPregunta").innerHTML = preguntaActual.pregunta;
+}
+
+function enviarRespuesta() {
+    let preguntaActual = listaPreguntas[indicePregunta];
+    let letraActual = preguntaActual.letra.toUpperCase();
+
+    let respuestaUsuario = ui.getInputRespuesta().trim().toLowerCase();
+    let respuestaCorrecta = preguntaActual.respuesta.trim().toLowerCase();
+
+    if (respuestaUsuario === respuestaCorrecta) {
+        document.getElementById(`letra-${letraActual}`).style.backgroundColor = "green";
+        ui.clearJuegoInput()
+    } else {
+        document.getElementById(`letra-${letraActual}`).style.backgroundColor = "red";
+        document.getElementById("respuestaCorrectaJuego").innerHTML = "La respuesta correcta era: " + respuestaCorrecta
+    }
+
+    indicePregunta++;
+    if (indicePregunta <= listaPreguntas.length) {
+        actualizarPreguntas();
+    } else {
+        alert("¡Terminaste el rosco!");
+    }
+}
+
+function pasapalabra() {
+    if (listaPreguntas.length <= 1) return; // si queda una sola, no tiene sentido pasarla
+
+    let preguntaActual = listaPreguntas[indicePregunta];
+    let letraActual = preguntaActual.letra.toUpperCase();
+
+    document.getElementById(`letra-${letraActual}`).style.backgroundColor = "yellow";
+
+    // Sacamos la pregunta actual de su posición...
+    listaPreguntas.splice(indicePregunta, 1);
+    // ...y la mandamos al final del array, para volver a esta después
+    listaPreguntas.push(preguntaActual);
+
+    if (indicePregunta >= listaPreguntas.length) indicePregunta = 0;
+
+    actualizarPreguntas();
+}
