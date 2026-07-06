@@ -40,6 +40,9 @@ class UserInterface {
         document.getElementById("passwordLogin").value = "";
     }
 
+    clearJuegoInput() {
+        document.getElementById("inputRespuesta").value = "";
+    }
     //Cambio de pantalla
     // Cambio de pantalla entre Login y Registro
     mostrarInicio() {
@@ -166,69 +169,85 @@ class UserInterface {
         return document.getElementById("selectPartidas").value
     }
     //Obtiene la informacion del select de PARTIDAS de modificar datos
-    selectModificarDatosPartidas(){
+    selectModificarDatosPartidas() {
         return document.getElementById("selectModificarDatosPartidas").value
     }
-    selectModificacionPartidas(){
+    selectModificacionPartidas() {
         return document.getElementById("selectModificacionPartidas").value
     }
-    getNuevoValorPartida(){
+    getNuevoValorPartida() {
         return document.getElementById("valoraModificarPartidas").value
     }
 
     // Juego
 
     temporizador() {
-    const frenar = document.getElementById("frenar");
-    const pausa = document.getElementById("pausa");
-    const temporizador = document.getElementById("temporizador");
+        const frenar = document.getElementById("frenar");
+        const pausa = document.getElementById("pausa");
+        const temporizador = document.getElementById("temporizador");
 
-    let tiempoRestante = 300;
-    let intervalo;
-    let pausado = false;
+        let tiempoRestante = 180;
+        let intervalo;
+        let pausado = false;
 
-    function actualizarTiempo() {
-        const minutos = Math.floor(tiempoRestante / 60);
-        const segundos = tiempoRestante % 60;
-        temporizador.innerHTML = `${String(minutos).padStart(2, "0")}:${String(segundos).padStart(2, "0")}`;
-    }
+        function actualizarTiempo() {
+            const minutos = Math.floor(tiempoRestante / 60);
+            const segundos = tiempoRestante % 60;
+            temporizador.innerHTML = `${String(minutos).padStart(2, "0")}:${String(segundos).padStart(2, "0")}`;
+        }
 
-    function iniciarTemporizador() {
-        intervalo = setInterval(() => {
-            tiempoRestante--;
-            actualizarTiempo();
-            if (tiempoRestante === 0) {
-                clearInterval(intervalo);
-                alert("¡Se acabó el tiempo!");
-            }
-        }, 1000);
-    }
+        function iniciarTemporizador() {
+            intervalo = setInterval(() => {
+                tiempoRestante--;
+                actualizarTiempo();
+                if (tiempoRestante === 0) {
+                    clearInterval(intervalo);
+                    alert("¡Se acabó el tiempo!");
+                }
+            }, 1000);
+        }
 
-    function frenarTemporizador() {
-        clearInterval(intervalo);
-        tiempoRestante = 300;
-        pausado = false;
-        pausa.textContent = "Pausa";
-        actualizarTiempo();
-    }
-
-    function pausarTemporizador() {
-        if (!pausado) {
+        function frenarTemporizador() {
             clearInterval(intervalo);
-            pausado = true;
-            pausa.textContent = "Reanudar";
-        } else {
-            iniciarTemporizador();
+            tiempoRestante = 180;
             pausado = false;
             pausa.textContent = "Pausa";
+            actualizarTiempo();
         }
+
+        function pausarTemporizador() {
+            if (!pausado) {
+                clearInterval(intervalo);
+                pausado = true;
+                pausa.textContent = "Reanudar";
+            } else {
+                iniciarTemporizador();
+                pausado = false;
+                pausa.textContent = "Pausa";
+            }
+        }
+
+        frenar.onclick = frenarTemporizador;
+        pausa.onclick = pausarTemporizador;
+
+        return { iniciarTemporizador };
+
     }
 
-    frenar.onclick = frenarTemporizador;
-    pausa.onclick = pausarTemporizador;
+    getInputRespuesta() {
+        return document.getElementById("inputRespuesta").value
+    }
 
-    return { iniciarTemporizador };
-}
+    // showModal()
+    showModal(titulo, texto) {
+        document.getElementById("modalTitle").textContent = titulo;
+        document.getElementById("modalBody").textContent = texto;
+        document.getElementById("modal").classList.add("show");
+    }
+
+    hideModal() {
+        document.getElementById("modal").classList.remove("show");
+    }
 }
 
 const ui = new UserInterface();

@@ -16,8 +16,10 @@
 <body>
 
     <div id="paginaPrincipal">
+        <img src="/front/Imagenes/Banner.png" alt="">
         <h1>Pasapalabra</h1>
         <button onclick="ui.mostrarLogin()">PLAY</button>
+
     </div>
 
     <div id="barraSuperior">
@@ -65,57 +67,63 @@
 
     <div id="seccionJuego" class="rosco" style="display: none;">
         <button id="iniciarJuego" onclick="inicializarJuego()">START</button>
-        <div id="letras">
-            <p>
-                <span id="letra-A" class="letra pendiente">A</span>
-                <span id="letra-B" class="letra pendiente">B</span>
-                <span id="letra-C" class="letra pendiente">C</span>
-                <span id="letra-D" class="letra pendiente">D</span>
-                <span id="letra-E" class="letra pendiente">E</span>
-                <span id="letra-F" class="letra pendiente">F</span>
-                <span id="letra-G" class="letra pendiente">G</span>
-                <span id="letra-H" class="letra pendiente">H</span>
-                <span id="letra-I" class="letra pendiente">I</span>
-                <span id="letra-J" class="letra pendiente">J</span>
-                <span id="letra-K" class="letra pendiente">K</span>
-                <span id="letra-L" class="letra pendiente">L</span>
-                <span id="letra-M" class="letra pendiente">M</span>
-                <span id="letra-N" class="letra pendiente">N</span>
-                <span id="letra-Ñ" class="letra pendiente">Ñ</span>
-                <span id="letra-O" class="letra pendiente">O</span>
-                <span id="letra-P" class="letra pendiente">P</span>
-                <span id="letra-Q" class="letra pendiente">Q</span>
-                <span id="letra-R" class="letra pendiente">R</span>
-                <span id="letra-S" class="letra pendiente">S</span>
-                <span id="letra-T" class="letra pendiente">T</span>
-                <span id="letra-U" class="letra pendiente">U</span>
-                <span id="letra-V" class="letra pendiente">V</span>
-                <span id="letra-W" class="letra pendiente">W</span>
-                <span id="letra-X" class="letra pendiente">X</span>
-                <span id="letra-Y" class="letra pendiente">Y</span>
-                <span id="letra-Z" class="letra pendiente">Z</span>
-            </p>
-        </div>
-        <div id="letra_y_condicion">
-            <p id="textoLetraActual">Letra actual: </p>
-            <p id="textoCondicion">Condición: </p>
-        </div>
+        <div id="flex">
+            <div id="letras">
+                <p>
+                    <span id="letra-A" class="letraPendiente">A</span>
+                    <span id="letra-B" class="letraPendiente">B</span>
+                    <span id="letra-C" class="letraPendiente">C</span>
+                    <span id="letra-D" class="letraPendiente">D</span>
+                    <span id="letra-E" class="letraPendiente">E</span>
+                    <span id="letra-F" class="letraPendiente">F</span>
+                    <span id="letra-G" class="letraPendiente">G</span>
+                    <span id="letra-H" class="letraPendiente">H</span>
+                    <span id="letra-I" class="letraPendiente">I</span>
+                    <span id="letra-J" class="letraPendiente">J</span>
+                    <span id="letra-K" class="letraPendiente">K</span>
+                    <span id="letra-L" class="letraPendiente">L</span>
+                    <span id="letra-M" class="letraPendiente">M</span>
+                    <span id="letra-N" class="letraPendiente">N</span>
+                    <span id="letra-Ñ" class="letraPendiente">Ñ</span>
+                    <span id="letra-O" class="letraPendiente">O</span>
+                    <span id="letra-P" class="letraPendiente">P</span>
+                    <span id="letra-Q" class="letraPendiente">Q</span>
+                    <span id="letra-R" class="letraPendiente">R</span>
+                    <span id="letra-S" class="letraPendiente">S</span>
+                    <span id="letra-T" class="letraPendiente">T</span>
+                    <span id="letra-U" class="letraPendiente">U</span>
+                    <span id="letra-V" class="letraPendiente">V</span>
+                    <span id="letra-W" class="letraPendiente">W</span>
+                    <span id="letra-X" class="letraPendiente">X</span>
+                    <span id="letra-Y" class="letraPendiente">Y</span>
+                    <span id="letra-Z" class="letraPendiente">Z</span>
+                </p>
+            </div>
+            <div id="botonesJuego">
+                <div id="letra_y_condicion">
+                    <p style="font-weight: bold;" id="textoLetraActual">Letra actual: </p>
+                    <p style="font-weight: bold;" id="textoCondicion">Condición: </p>
+                </div>
 
-        <div id="pregunta">
-            <p id="textoPregunta">Aquí aparecerá la consigna cuando el juego comience...</p>
-        </div>
+                <div id="pregunta">
+                    <p style="font-weight: bold;" id="textoPregunta">Aquí aparecerá la consigna cuando el juego
+                        comience...</p>
+                </div>
 
-        <input type="text" placeholder="Tu respuesta aquí">
+                <input id="inputRespuesta" type="text" placeholder="Tu respuesta aquí">
+                <p><span id="respuestaCorrectaJuego"></span></p>
 
-        <button id="botonPasapalabra">PASAPALABRA</button>
-        <button id="botonEnviar">ENVIAR</button>
+                <button id="botonPasapalabra" onclick="pasapalabra()">PASAPALABRA</button>
+                <button id="botonEnviar" onclick="enviarRespuesta()">ENVIAR</button>
 
-        <div class="container">
-            <h2>Tiempo</h2>
-            <p class="temporizador" id="temporizador">05:00</p>
-            <div>
-                <button id="frenar">Frenar juego</button>
-                <button id="pausa">Pausa</button>
+                <div class="container">
+                    <h2>Tiempo Restante</h2>
+                    <p class="temporizador" id="temporizador">03:00</p>
+                    <div id="contenedorBotones">
+                        <button id="frenar">Frenar juego</button>
+                        <button id="pausa">Pausa</button>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -239,7 +247,7 @@
             <h3>Eliminar partidas</h3>
             <select id="selectPartida"></select>
             <button onclick="eliminarPartida()">Eliminar partida</button>
-            
+
             <h3>Modificar partida</h3>
             <select id="selectModificarDatosPartidas"></select>
             <select id="selectModificacionPartidas">
@@ -251,6 +259,22 @@
             <button onclick="modificarPartidas()">Modificar partida</button>
         </div>
     </div>
+
+    <!-- ui.showModal() -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 id="modalTitle">Modal title</h5>
+            </div>
+            <div class="modal-body">
+                <p id="modalBody">Modal body text goes here.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" onclick="ui.hideModal()">¡Listo!</button>
+            </div>
+        </div>
+    </div>
+
 
     <script src="dom.js"></script>
     <script src="index.js"></script>
