@@ -1,6 +1,7 @@
 body {
     margin: 0;
     background-color: #ffd8bb;
+    overflow: hidden;
 }
 
 button, a{
@@ -41,39 +42,41 @@ button, a{
     color: black;
     font-family: 'Chau Philomene One', sans-serif;
     font-size: 22px;
+    margin-right: 20px;
 }
 
 /* Pantalla principal */
 
-
-#paginaPrincipal{
-    position: relative;    /* NUEVO: Permite que la imagen se acomode detrás */
-    padding: 100px;
-    width: 100;            /* Ajusta este ancho según qué tan grande quieras la sección */
-    height: 500px;         /* NUEVO: Necesitamos darle una altura fija o mínima para contener todo */
-    
-    /* Flexbox para alinear el texto y el botón al centro de la imagen */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start; /* Alinea el texto y botón a la izquierda. Cambia a 'center' si los quieres en el medio */
-    gap: 20px;
-}
-
-#paginaPrincipal img{
-    position: absolute;    /* NUEVO: Saca la imagen del flujo para que no empuje el texto */
+#paginaPrincipal {
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    height: 770px;
-    object-fit: cover;     /* NUEVO: Hace que la imagen cubra todo el fondo sin deformarse */
-    z-index: 1;
+    height: 100vh;
+    background-image: url("/front/Imagenes/Banner.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding-left: 100px;
+    z-index: 100;
 }
+
+#paginaPrincipal img {
+    display: none; /* Ocultamos la imagen porque usamos background-image */
+}
+
 #paginaPrincipal h1 {
     font-size: 90px;
     color: black;
-    margin-bottom: 10px;
+    margin: 0;
+    margin-bottom: 30px;
     font-family: 'Chau Philomene One', sans-serif;
+    position: relative;
+    z-index: 10;
 }
 
 #paginaPrincipal button {
@@ -91,7 +94,7 @@ button, a{
 
 #seccionRegistro{
     text-align: center;
-    margin-top: 90px;
+    margin-top: 200px;
 }
 
 #seccionRegistro h1 {
@@ -143,7 +146,7 @@ button, a{
 
 #seccionInicioSesion{
     text-align: center;
-    margin-top: 90px;
+    margin-top: 200px;
 }
 
 #seccionInicioSesion h1 {
@@ -217,213 +220,241 @@ button, a{
 }
 
 #seccionJuego {
-    margin-top: 100px;
-    padding: 20px;
-
-}
-#seccionJuego p{
-    font-family: 'Open Sans', sans-serif;
-    
-}
-
-
-
-#botonPasapalabra{
-    background-color: #f1da0a;
-    border: none;
-    border-radius: 12px;
-    padding: 5px;
-    width: 30%;
-    height: 10%;
-    gap: 10px;
-    font-family: 'Archivo Black', sans-serif;
+    margin-top: 80px;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - 80px);
+    gap: 15px;
+    overflow: hidden;
+    padding-top: 20px;
 }
 
-#botonEnviar{
-    background-color: #5ead3c;
-    border: none;
-    border-radius: 12px;
-    padding: 5px;
-    width: 20%;
-    height: 10%;
-    border: none;
-    font-family: 'Archivo Black', sans-serif;
-
+#flex {
+    display: flex;
+    gap: 150px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 1400px;
+    overflow: hidden;
+    margin-top: 80px;
 }
 
-.container {
+
+#botonesJuego {
     display: flex;
     flex-direction: column;
     width: 400px;
+    gap: 0;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
+    overflow: hidden;
+}
 
+
+#letra_y_condicion {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+#pregunta {
+    width: 100%;
+    margin-bottom: 15px;
     background-color: #f8be92;
     border-radius: 25px;
-    padding: 5px, 10px;
+    padding: 20px;
     border: 2px solid #ff7722;
-}
-.container h2{
-    font-family: 'Chau Philomene', sans-serif;
+    box-sizing: border-box;
 }
 
-#contenedorBotones{
-    display: flex;
-    flex-direction: row;    
-    justify-content: center; 
-    align-items: center;    
-    gap: 15px;     
-    width: 70% !important;
-    height: 20%;
-}
-
-#frenar{
-    background-color: #ff751f;
-    border: none;
-    border-radius: 12px;
-    padding: 10px;
-    border: none;
-    font-family: 'Archivo Black', sans-serif
-}
-
-#pausa{
-    background-color: #ff751f;
-    border: none;
-    border-radius: 12px;
-    padding: 10px;
-    
-    border: none;
-    font-family: 'Archivo Black', sans-serif
-}
-#inputRespuesta{   
-    width: 96%;
+#inputRespuesta {   
+    width: 90%;
     height: 45px;
     border: none;
     border-radius: 25px;
     background-color: #fffdf5;
     padding-left: 15px;
     font-size: 18px;
-    margin-bottom: 22px;
+    margin-bottom: 15px;
     font-family: 'Open Sans', sans-serif;
 }
 
-#flex {
-    display: flex;
-}
-
-#letras {
-    position: relative;
-    width: 500px;
-    height: 500px;
-    
-}
-
-#letras p {
-    margin: 0;  /* el <p> que envuelve los spans no debe empujar nada */
-}
-
-.letraPendiente {
-    position: absolute;
-    background-color: #f8be92;
-    border-radius: 30px;
-    padding: 8px;
-}
-
-
-/* Pantalla admin */
-#seccionAdmin {
-    margin-top: 100px;
-    padding: 20px;
-}
-
-/* showModal */
-.modal {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(10, 10, 14, 0.7);
-    backdrop-filter: blur(3px);
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-}
-
-.modal.show {
-    display: flex;
-    animation: modalFadeIn 0.2s ease-out;
-}
-
-@keyframes modalFadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-.modal-content {
-    width: 90%;
-    max-width: 400px;
-    background: #fffdf5;
-    border-radius: 25px;
-    box-shadow: 12px 12px 0px black;
-    overflow: hidden;
-    animation: modalPopIn 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-@keyframes modalPopIn {
-    from { transform: scale(0.9) translateY(15px); opacity: 0; }
-    to { transform: scale(1) translateY(0); opacity: 1; }
-}
-
-.modal-header {
-    padding: 20px 24px;
-    background: #ff7722;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.modal-header h5 {
-    margin: 0;
-    font-family: 'Chau Philomene One', sans-serif;
-    font-size: 24px;
-    color: #000;
-}
-
-.btn-close {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
+#botonPasapalabra {
+    background-color: #f1da0a;
     border: none;
-    background: #000;
-    color: #ff7722;
+    border-radius: 12px;
+    padding: 12px 20px;
+    width: 90%;
     font-family: 'Archivo Black', sans-serif;
     font-size: 16px;
     cursor: pointer;
+    margin-bottom: 10px;
 }
 
-.modal-body {
-    padding: 26px 24px;
-}
-
-.modal-body p {
-    margin: 0;
-    color: #000;
-    font-size: 18px;
-    font-family: 'Open Sans', sans-serif;
-    line-height: 1.5;
-}
-
-.modal-footer {
-    padding: 0 24px 24px;
-    display: flex;
-    justify-content: flex-end;
-}
-
-.btn-success {
-    padding: 12px 26px;
-    border-radius: 12px;
+#botonEnviar {
+    background-color: #5ead3c;
     border: none;
-    background: #5ead3c;
-    color: #fff;
+    border-radius: 12px;
+    padding: 12px 20px;
+    width: 90%;
     font-family: 'Archivo Black', sans-serif;
-    font-size: 15px;
+    color: white;
+    font-size: 16px;
     cursor: pointer;
+    margin-bottom: 30px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    max-width: 450px;
+    gap: 15px;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8be92;
+    border-radius: 25px;
+    padding: 20px;
+    border: 2px solid #ff7722;
+    box-sizing: border-box;
+}
+
+#tiempoRestante {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+#tiempoRestante h2 {
+    margin: 0;
+    margin-bottom: 5px;
+    font-size: 18px;
+}
+
+#tiempoRestante .temporizador {
+    margin: 0;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+#contenedorBotones {
+    display: flex;
+    gap: 15px;     
+    width: 100%;
+    justify-content: center;
+}
+
+#frenar {
+    background-color: #ff751f;
+    border: none;
+    border-radius: 12px;
+    padding: 10px 15px;
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 14px;
+    color: white;
+    cursor: pointer;
+    flex: 1;
+}
+
+#pausa {
+    background-color: #ff751f;
+    border: none;
+    border-radius: 12px;
+    padding: 10px 15px;
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 14px;
+    color: white;
+    cursor: pointer;
+    flex: 1;
+}
+
+/* Pantalla admin */
+
+#seccionAdmin {
+    margin-top: 100px;
+    padding: 20px;
+    background-color: #fffdf5;
+    border-radius: 25px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+    padding-bottom: 40px;
+}
+
+#seccionAdmin h2, #seccionAdmin h3 {
+    font-family: 'Chau Philomene One', sans-serif;
+    color: #ff751f;
+}
+
+#seccionAdmin h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+#seccionAdmin h3 {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+table th, table td {
+    border: 2px solid #ff7722;
+    padding: 10px;
+    text-align: left;
+}
+
+table th {
+    background-color: #ff751f;
+    color: white;
+}
+
+#seccionAdmin button {
+    background-color: #5ead3c;
+    color: white;
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 16px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#seccionAdmin button:hover {
+    background-color: #4c9c2e;
+}
+
+#seccionAdmin input, #seccionAdmin select {
+    width: 100%;
+    height: 45px;
+    border: 2px solid #ff7722;
+    border-radius: 12px;
+    padding: 0 15px;
+    margin-bottom: 15px;
+    font-size: 16px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+#seccionAdmin select {
+    appearance: none;
+    background-color: #fff;
+    padding-right: 30px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="%23ff751f"><path d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+}
+
+.modal-footer .btn {
+    background-color: #5ead3c;
+    color: white;
 }
