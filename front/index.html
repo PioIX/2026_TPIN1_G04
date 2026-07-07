@@ -58,15 +58,15 @@
     </div>
 
     <div id="home" style="display: none;">
-        <button id="botonEmpezar" onclick="ui.mostrarJuego()">¡Ir al juego!</button>
-        <!-- Acá se van a ver otros datos como...
+        <button id="botonEmpezar"
+            onclick="ui.mostrarJuego(); ui.modalGame('¡EMPEZAR!', 'Tenés 3 minutos para responder todas las preguntas del Rosco. ¿Estás listo?', inicializarJuego)"
+            ,>¡Ir al juego!</button> <!-- Acá se van a ver otros datos como...
         - Tabla de posiciones 
         - Historial / Estadísticas: Cuántos roscos completó, récord de tiempo, etc -->
     </div>
 
 
     <div id="seccionJuego" class="rosco" style="display: none;">
-        <button id="iniciarJuego" onclick="inicializarJuego()">START</button>
         <div id="flex">
             <div id="letras">
                 <p>
@@ -98,18 +98,22 @@
                     <span id="letra-Y" class="letraPendiente">Y</span>
                     <span id="letra-Z" class="letraPendiente">Z</span>
                 </p>
+
+                <!-- MOVIDO: ahora adentro de #letras -->
+                <div id="centroRosco">
+                    <div id="letra_y_condicion">
+                        <p id="textoCondicion">Condición: </p>
+                        <p id="textoLetraActual">Letra actual: </p>
+                    </div>
+
+                    <div id="pregunta">
+                        <p id="textoPregunta">Aquí aparecerá la consigna cuando el juego comience...</p>
+                    </div>
+
+                </div>
             </div>
+
             <div id="botonesJuego">
-                <div id="letra_y_condicion">
-                    <p style="font-weight: bold;" id="textoLetraActual">Letra actual: </p>
-                    <p style="font-weight: bold;" id="textoCondicion">Condición: </p>
-                </div>
-
-                <div id="pregunta">
-                    <p style="font-weight: bold;" id="textoPregunta">Aquí aparecerá la consigna cuando el juego
-                        comience...</p>
-                </div>
-
                 <input id="inputRespuesta" type="text" placeholder="Tu respuesta aquí">
                 <p><span id="respuestaCorrectaJuego"></span></p>
 
@@ -120,12 +124,13 @@
                     <h2>Tiempo Restante</h2>
                     <p class="temporizador" id="temporizador">03:00</p>
                     <div id="contenedorBotones">
-                        <button id="frenar">Frenar juego</button>
+                        <button id="frenar">Finalizar juego</button>
                         <button id="pausa">Pausa</button>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
     </div>
 
@@ -271,6 +276,20 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-success" onclick="ui.hideModal()">¡Listo!</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalGame" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 id="modalGameTitle">¡Preparate para Jugar!</h5>
+            </div>
+            <div class="modal-body">
+                <p id="modalGameInstructions"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" id="btnEmpezarJuegoJuego">¡START!</button>
             </div>
         </div>
     </div>

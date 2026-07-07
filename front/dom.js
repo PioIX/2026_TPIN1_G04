@@ -248,7 +248,26 @@ class UserInterface {
     hideModal() {
         document.getElementById("modal").classList.remove("show");
     }
-}
+
+    modalGame(textoBoton, instrucciones, funcionEmpezar) {
+        // 1. Inyectamos las instrucciones y el texto del botón en el HTML
+        document.getElementById("modalGameInstructions").textContent = instrucciones;
+
+        const botonEmpezar = document.getElementById("btnEmpezarJuegoJuego");
+        botonEmpezar.textContent = textoBoton;
+
+        // 2. Mostramos el modal agregando la clase 'show'
+        const modal = document.getElementById("modalGame");
+        modal.classList.add("show");
+
+        // 3. Cuando hagan clic en el botón, se cierra el modal y arranca el juego
+        botonEmpezar.onclick = () => {
+            modal.classList.remove("show"); // Oculta el modal
+            funcionEmpezar(); // Llama a inicializarJuego()
+        };
+
+    }
+};
 
 const ui = new UserInterface();
 
