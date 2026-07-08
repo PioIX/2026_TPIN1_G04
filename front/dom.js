@@ -48,6 +48,7 @@ class UserInterface {
     mostrarInicio() {
         document.getElementById("paginaPrincipal").style.display = "block";
         document.getElementById("seccionInicioSesion").style.display = "none";
+        document.getElementById("home").style.display = "none";
         document.getElementById("seccionRegistro").style.display = "none";
         document.getElementById("seccionJuego").style.display = "none";
         document.getElementById("seccionAdmin").style.display = "none";
@@ -72,7 +73,7 @@ class UserInterface {
     }
 
     // Muestra la pantalla del juego
-    mostrarInicio() {
+    mostrarHome() {
         document.getElementById("home").style.display = "block";
         document.getElementById("paginaPrincipal").style.display = "none";
         document.getElementById("seccionRegistro").style.display = "none";

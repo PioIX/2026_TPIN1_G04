@@ -453,15 +453,18 @@ button, a{
 #seccionAdmin {
     margin-top: 100px;
     padding: 20px;
-    background-color: #fffdf5;
+
     border-radius: 25px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     max-height: calc(100vh - 120px);
     overflow-y: auto;
     padding-bottom: 40px;
 }
-
-#seccionAdmin h2, #seccionAdmin h3 {
+#seccionAdmin h2{
+    font-family: 'Chau Philomene One', sans-serif;
+    color: black
+}
+#seccionAdmin h3 {
     font-family: 'Chau Philomene One', sans-serif;
     color: #ff751f;
 }
@@ -512,7 +515,7 @@ table th {
 }
 
 #seccionAdmin input, #seccionAdmin select {
-    width: 100%;
+    width: 95%;
     height: 45px;
     border: 2px solid #ff7722;
     border-radius: 12px;
@@ -520,12 +523,15 @@ table th {
     margin-bottom: 15px;
     font-size: 16px;
     font-family: 'Open Sans', sans-serif;
+
+    display: block;
+    margin: 0 auto 15px auto;
 }
 
 #seccionAdmin select {
     appearance: none;
     background-color: #fff;
-    padding-right: 30px;
+
     background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="%23ff751f"><path d="M7 10l5 5 5-5z"/></svg>');
     background-repeat: no-repeat;
     background-position: right 10px center;
