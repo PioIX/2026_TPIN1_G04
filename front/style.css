@@ -216,7 +216,7 @@ button, a{
 
 #seccionJuego {
     margin-top: 80px;
-    height: calc(100vh - 80px);
+    min-height: calc(100vh - 80px);
     padding: 15px 20px;
     display: flex;
     flex-direction: column;
@@ -235,7 +235,8 @@ button, a{
     width: 100%;
     max-width: 1400px;
     flex-wrap: wrap;
-    overflow: hidden;
+    position: relative; 
+    min-height: 500px;
 }
 
 #centroRosco {
@@ -258,6 +259,10 @@ button, a{
     align-items: center;
     justify-content: flex-start;
     overflow: hidden;
+}
+
+#respuestaCorrectaJuego{
+    font-family:'Arimo', sans-serif;
 }
 
 #letras {
@@ -334,6 +339,7 @@ button, a{
     border: 2px solid #ff7722;
     box-sizing: border-box;
     font-family: 'Open Sans', sans-serif;
+    text-align: center;
 }
 
 #inputRespuesta {   
@@ -471,15 +477,17 @@ button, a{
 }
 
 table {
-    width: 100%;
+    width: 80%;
+    margin: 0 auto 20px auto;
     border-collapse: collapse;
     margin-bottom: 20px;
+    table-layout: fixed;
 }
 
 table th, table td {
     border: 2px solid #ff7722;
     padding: 10px;
-    text-align: left;
+    text-align: center;
 }
 
 table th {

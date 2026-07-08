@@ -60,7 +60,18 @@
     <div id="home" style="display: none;">
         <button id="botonEmpezar"
             onclick="ui.mostrarJuego(); ui.modalGame('¡EMPEZAR!', 'Tenés 3 minutos para responder todas las preguntas del Rosco. ¿Estás listo?', inicializarJuego)"
-            ,>¡Ir al juego!</button> <!-- Acá se van a ver otros datos como...
+            ,>¡Ir al juego!</button> <!-- Acá se van a ver otros datos como... -->
+        <table>
+            <thead>
+                    <tr>
+                        <th>usuario</th>
+                        <th>puntos</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaPartidasHome">
+                </tbody>
+        </table>
+        <!--
         - Tabla de posiciones 
         - Historial / Estadísticas: Cuántos roscos completó, récord de tiempo, etc -->
     </div>

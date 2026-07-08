@@ -134,7 +134,18 @@ app.delete('/partidas', async function(req,res){
     }
 })
 
-//Se modifica una pregunta
+app.post('/partidas', async function (req, res) {
+    try {
+        await realizarQuery(`INSERT INTO Partidas (usuario, puntos) VALUES
+            ('${req.body.usuario}', '${req.body.puntos}')`);
+        res.status(201).json({ mensaje: "Partida guardada con éxito" });
+    } catch (error) {
+        console.error("Error en /partidas:", error);
+        res.status(500).json({ mensaje: "Hubo un error al guardar la partida" });
+    }
+});
+
+//Se modifica una partida
 app.put('/partidas', async function(req,res){
     try{
         let respuesta = await realizarQuery(`UPDATE Partidas SET ${req.body.modificacion} = '${req.body.valor}' WHERE id = ${req.body.id}`)
@@ -144,3 +155,4 @@ app.put('/partidas', async function(req,res){
         res.status(500).json({ mensaje: "Hubo un error al modificar la partida"});
     }
 })
+
