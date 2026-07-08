@@ -102,6 +102,7 @@ function posicionarLetras() {
 
 let indicePregunta = 0;
 let listaPreguntas = [];
+let puntosPartida = 0;
 
 async function inicializarJuego() {
     ui.temporizador().iniciarTemporizador()
@@ -131,16 +132,18 @@ function enviarRespuesta() {
     if (respuestaUsuario === respuestaCorrecta) {
         document.getElementById(`letra-${letraActual}`).style.backgroundColor = "green";
         ui.clearJuegoInput()
+        puntosPartida++;
     } else {
         document.getElementById(`letra-${letraActual}`).style.backgroundColor = "red";
         document.getElementById("respuestaCorrectaJuego").innerHTML = "La respuesta correcta era: " + respuestaCorrecta
     }
 
     indicePregunta++;
-    if (indicePregunta <= listaPreguntas.length) {
+    if (indicePregunta < listaPreguntas.length) {
         actualizarPreguntas();
     } else {
         alert("¡Terminaste el rosco!");
+        guardarPartida(); 
     }
 }
 
@@ -160,4 +163,33 @@ function pasapalabra() {
     if (indicePregunta >= listaPreguntas.length) indicePregunta = 0;
 
     actualizarPreguntas();
+}
+
+function reiniciarJuego(){
+    const letras = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','Ñ','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+    for (let i = 0; i < letras.length; i++) {
+        let span = document.getElementById(`letra-${letras[i]}`);
+        if (span != null) {
+            span.style.backgroundColor = ""; 
+        }
+    }
+
+    indicePregunta = 0;
+    puntosPartida = 0;
+
+    document.getElementById("respuestaCorrectaJuego").innerHTML = "";
+    ui.clearJuegoInput();
+
+    if (listaPreguntas.length > 0) {
+        actualizarPreguntas();
+    }
+}
+
+function guardarPartida() {
+    let datos = {
+        usuario: user_log,
+        puntos: puntosPartida
+    }
+    llamadoalPostPartidas(datos)
+    puntosPartida = 0; // resetea los puntos para la próxima partida
 }

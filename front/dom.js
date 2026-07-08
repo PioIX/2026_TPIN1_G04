@@ -79,6 +79,7 @@ class UserInterface {
         document.getElementById("seccionInicioSesion").style.display = "none";
         document.getElementById("seccionJuego").style.display = "none";
         document.getElementById("seccionAdmin").style.display = "none";
+        llenarTablaHome();
     }
 
     mostrarJuego() {
@@ -213,6 +214,7 @@ class UserInterface {
             pausado = false;
             pausa.textContent = "Pausa";
             actualizarTiempo();
+            reiniciarJuego();
         }
 
         function pausarTemporizador() {

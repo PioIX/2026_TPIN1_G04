@@ -262,7 +262,7 @@ async function llamadoAlGetPartidas() {
     let resultPartidas = await respuesta.json()
     let tablaPartidas = document.getElementById("tablaPartidas")
     let selectPartidas = document.getElementById("selectPartidas")
-    //llena la tabla preguntas
+    //llena la tabla prtidas
     if(tablaPartidas){
         tablaPartidas.innerHTML = ""
         for(let i = 0; i < resultPartidas.length; i++){ 
@@ -323,5 +323,61 @@ async function modificarPartidas(){
         llamadoAlGetPartidas()
     }catch(error){
         return ("Hubo un error")
+    }
+}
+
+//  JUEGO
+async function llamadoalPostPartidas(datos) {
+    try{
+        let response = await fetch('http://localhost:4000/partidas',{
+            method: "POST",
+            headers: {
+                "Content-type":"application/json",
+            },
+            body: JSON.stringify(datos)
+        })
+        let result = await response.json()
+        console.log(result)
+    } catch (error) {
+        console.log("ERROR al guardar la partida", error)
+    }
+}
+
+async function llenarTablaHome() {
+    const respuesta = await fetch('http://localhost:4000/partidas', {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+    });
+    let resultPartidas = await respuesta.json();
+    let listaUsuarios = await llamadoAlGet(); //trae los usuarios para que aparezcan en el ranking
+    let tabla = document.getElementById("tablaPartidasHome");
+    if (tabla == null) {
+        return; //si la tabla no tiene nada no se ejecuta lo de abajo
+    }
+    // Ordena el array de mayor a menor puntaje
+    for (let i = 0; i < resultPartidas.length; i++) {
+        for (let j = 0; j < resultPartidas.length - 1; j++) {
+            if (resultPartidas[j].puntos < resultPartidas[j + 1].puntos) {
+                let temporal = resultPartidas[j];
+                resultPartidas[j] = resultPartidas[j + 1];
+                resultPartidas[j + 1] = temporal;
+            }
+        }
+    }
+
+    tabla.innerHTML = "";
+    for (let i = 0; i < resultPartidas.length; i++) { 
+        let nombreUsuario = resultPartidas[i].usuario; // si no encuentra el nombre muestra el id
+        for (let k = 0; k < listaUsuarios.length; k++) { //se fija en la lista de usuarios
+            if (listaUsuarios[k].id == resultPartidas[i].usuario) {
+                nombreUsuario = listaUsuarios[k].usuario; //cambia el id por el user una vez que lo encontró
+                break;
+            }
+        }
+        tabla.innerHTML += `
+        <tr>
+            <td>${nombreUsuario}</td>
+            <td>${resultPartidas[i].puntos}</td>
+        </tr>`;
     }
 }
