@@ -41,7 +41,7 @@ async function login() {
         ui.showModal("¡Bienvenido, " + usuarioEncontrado.usuario + "!", "¡Disfruta del juego!")
         user_log = usuarioEncontrado.id // Se coloca su id como usuario logueado
         console.log("Sesión iniciada, id:", user_log)
-        ui.mostrarInicio()
+        ui.mostrarHome()
 
     } else {
         alert("Usuario o contraseña incorrectos")
@@ -140,11 +140,15 @@ function enviarRespuesta() {
 
     indicePregunta++;
     if (indicePregunta < listaPreguntas.length) {
-        actualizarPreguntas();
+        actualizarPreguntas();    
+        const input = document.getElementById('inputRespuesta');
+        input.value = ''; 
+        input.focus();
     } else {
         alert("¡Terminaste el rosco!");
         guardarPartida(); 
     }
+
 }
 
 function pasapalabra() {
@@ -182,6 +186,9 @@ function reiniciarJuego(){
 
     if (listaPreguntas.length > 0) {
         actualizarPreguntas();
+        const input = document.getElementById('inputRespuesta');
+        input.value = ''; 
+        input.focus();
     }
 }
 
@@ -193,3 +200,10 @@ function guardarPartida() {
     llamadoalPostPartidas(datos)
     puntosPartida = 0; // resetea los puntos para la próxima partida
 }
+
+document.getElementById('inputRespuesta').addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        event.preventDefault(); 
+        enviarRespuesta(); // Llama a la función de arriba
+    }
+});
