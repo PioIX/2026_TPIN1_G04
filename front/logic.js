@@ -79,6 +79,7 @@ async function newUser() {
     }
 }
 
+// Método para formar un ROSCO con las letras
 function posicionarLetras() {
     const letras = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','Ñ','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
     const total = letras.length;
@@ -104,13 +105,35 @@ let indicePregunta = 0;
 let listaPreguntas = [];
 let puntosPartida = 0;
 
+
+// Método para armar las preguntas según su letra
+function armarPreguntasJuego(preguntas) {
+    const ordenLetras = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','Ñ','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+    let preguntasOrdenadas = []; // Esta variable va a ser un array que contenga todas las preguntas seleccionadas que se van a mostrar en el rosco después de filtrarlas
+    ordenLetras.forEach(letra => {
+        // El método ".filter()" devuelve un array nuevo (a partir de otro, con condiciones)
+        // Acá según la lista de preguntas, se filtran las preguntas que coincidan con la letra actual (la letra de la tabla con la letra actual del rosco)
+        let coincidencias = preguntas.filter(p => p.letra.toUpperCase() === letra);
+        if (coincidencias.length > 0) {
+            // Se elige un elemento random de ese nuevo array creado (si hay 5 elementos en la tabla con la letra A, se elige uno para mostrar)
+            let indiceRandom = Math.floor(Math.random() * coincidencias.length);
+            preguntasOrdenadas.push(coincidencias[indiceRandom]);
+        }
+        // Si no hay ninguna pregunta para esa letra, simplemente se la salta
+    });
+
+    return preguntasOrdenadas;
+}
+
 async function inicializarJuego() {
     ui.temporizador().iniciarTemporizador()
     let respuestaBD = await llamadoAlGetPreguntas()
     listaPreguntas = respuestaBD.data || respuestaBD || []; 
+
+    preguntasArmadas = armarPreguntasJuego(listaPreguntas);
     indicePregunta = 0;
 
-    if (listaPreguntas.length > 0) {
+    if (preguntasArmadas.length > 0) {
         actualizarPreguntas();
     }
 }
@@ -207,3 +230,7 @@ document.getElementById('inputRespuesta').addEventListener('keydown', function(e
         enviarRespuesta(); // Llama a la función de arriba
     }
 });
+
+// Falta:
+// - Método para frenar el juego (y cambiar la pantalla, advertir que los cambios no se guardarán)
+// - Método para pausar el juego (se tiene que mostrar un ShowModal, porque sino el usuario puede hacer trampa)
