@@ -168,7 +168,7 @@ class UserInterface {
 
     //Obtiene la informacion del select de PARTIDAS de la seccion de admin
     getSelectPartidas() {
-        return document.getElementById("selectPartidas").value
+        return document.getElementById("selectPartida").value
     }
     //Obtiene la informacion del select de PARTIDAS de modificar datos
     selectModificarDatosPartidas() {
