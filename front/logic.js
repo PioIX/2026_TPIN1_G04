@@ -41,7 +41,7 @@ async function login() {
         ui.showModal("¡Bienvenido, " + usuarioEncontrado.usuario + "!", "¡Disfruta del juego!")
         user_log = usuarioEncontrado.id // Se coloca su id como usuario logueado
         console.log("Sesión iniciada, id:", user_log)
-        ui.mostrarInicio()
+        ui.mostrarHome()
 
     } else {
         alert("Usuario o contraseña incorrectos")
@@ -102,6 +102,7 @@ function posicionarLetras() {
 
 let indicePregunta = 0;
 let listaPreguntas = [];
+let puntosPartida = 0;
 
 async function inicializarJuego() {
     ui.temporizador().iniciarTemporizador()
@@ -131,17 +132,23 @@ function enviarRespuesta() {
     if (respuestaUsuario === respuestaCorrecta) {
         document.getElementById(`letra-${letraActual}`).style.backgroundColor = "green";
         ui.clearJuegoInput()
+        puntosPartida++;
     } else {
         document.getElementById(`letra-${letraActual}`).style.backgroundColor = "red";
         document.getElementById("respuestaCorrectaJuego").innerHTML = "La respuesta correcta era: " + respuestaCorrecta
     }
 
     indicePregunta++;
-    if (indicePregunta <= listaPreguntas.length) {
-        actualizarPreguntas();
+    if (indicePregunta < listaPreguntas.length) {
+        actualizarPreguntas();    
+        const input = document.getElementById('inputRespuesta');
+        input.value = ''; 
+        input.focus();
     } else {
         alert("¡Terminaste el rosco!");
+        guardarPartida(); 
     }
+
 }
 
 function pasapalabra() {
@@ -161,3 +168,42 @@ function pasapalabra() {
 
     actualizarPreguntas();
 }
+
+function reiniciarJuego(){
+    const letras = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','Ñ','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+    for (let i = 0; i < letras.length; i++) {
+        let span = document.getElementById(`letra-${letras[i]}`);
+        if (span != null) {
+            span.style.backgroundColor = ""; 
+        }
+    }
+
+    indicePregunta = 0;
+    puntosPartida = 0;
+
+    document.getElementById("respuestaCorrectaJuego").innerHTML = "";
+    ui.clearJuegoInput();
+
+    if (listaPreguntas.length > 0) {
+        actualizarPreguntas();
+        const input = document.getElementById('inputRespuesta');
+        input.value = ''; 
+        input.focus();
+    }
+}
+
+function guardarPartida() {
+    let datos = {
+        usuario: user_log,
+        puntos: puntosPartida
+    }
+    llamadoalPostPartidas(datos)
+    puntosPartida = 0; // resetea los puntos para la próxima partida
+}
+
+document.getElementById('inputRespuesta').addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        event.preventDefault(); 
+        enviarRespuesta(); // Llama a la función de arriba
+    }
+});
