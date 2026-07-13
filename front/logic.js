@@ -104,7 +104,7 @@ function posicionarLetras() {
 let indicePregunta = 0;
 let listaPreguntas = [];
 let puntosPartida = 0;
-
+let erroresPartida = 0;
 
 // Método para armar las preguntas según su letra
 function armarPreguntasJuego(preguntas) {
@@ -139,14 +139,14 @@ async function inicializarJuego() {
 }
 
 function actualizarPreguntas() {
-    let preguntaActual = listaPreguntas[indicePregunta];
+    let preguntaActual = preguntasArmadas[indicePregunta];
     document.getElementById("textoLetraActual").innerHTML = "Letra actual: " + preguntaActual.letra;
     document.getElementById("textoCondicion").innerHTML = "Condición: " + preguntaActual.condicion;
     document.getElementById("textoPregunta").innerHTML = preguntaActual.pregunta;
 }
 
 function enviarRespuesta() {
-    let preguntaActual = listaPreguntas[indicePregunta];
+    let preguntaActual = preguntasArmadas[indicePregunta];
     let letraActual = preguntaActual.letra.toUpperCase();
 
     let respuestaUsuario = ui.getInputRespuesta().trim().toLowerCase();
@@ -159,17 +159,23 @@ function enviarRespuesta() {
     } else {
         document.getElementById(`letra-${letraActual}`).style.backgroundColor = "red";
         document.getElementById("respuestaCorrectaJuego").innerHTML = "La respuesta correcta era: " + respuestaCorrecta
+        erroresPartida++
     }
 
     indicePregunta++;
-    if (indicePregunta < listaPreguntas.length) {
+    if (indicePregunta < preguntasArmadas.length) {
         actualizarPreguntas();    
         const input = document.getElementById('inputRespuesta');
         input.value = ''; 
         input.focus();
     } else {
-        alert("¡Terminaste el rosco!");
+        let mensajeStats = `¡Completaste el rosco! Aquí están tus resultados:\n\n` +
+                           ` Respuestas correctas: ${puntosPartida}\n` +
+                           ` Respuestas incorrectas: ${erroresPartida}`;
+                           
+        ui.showModal("¡Fin de la Partida!", mensajeStats);
         guardarPartida(); 
+        ui.mostrarHome();
     }
 
 }
@@ -177,15 +183,15 @@ function enviarRespuesta() {
 function pasapalabra() {
     if (listaPreguntas.length <= 1) return; // si queda una sola, no tiene sentido pasarla
 
-    let preguntaActual = listaPreguntas[indicePregunta];
+    let preguntaActual = preguntasArmadas[indicePregunta];
     let letraActual = preguntaActual.letra.toUpperCase();
 
     document.getElementById(`letra-${letraActual}`).style.backgroundColor = "yellow";
 
     // Sacamos la pregunta actual de su posición...
-    listaPreguntas.splice(indicePregunta, 1);
+    preguntasArmadas.splice(indicePregunta, 1);
     // ...y la mandamos al final del array, para volver a esta después
-    listaPreguntas.push(preguntaActual);
+    preguntasArmadas.push(preguntaActual);
 
     if (indicePregunta >= listaPreguntas.length) indicePregunta = 0;
 
@@ -213,14 +219,20 @@ function reiniciarJuego(){
         input.value = ''; 
         input.focus();
     }
+    inicializarJuego();
 }
 
-function guardarPartida() {
+async function guardarPartida() {
     let datos = {
         usuario: user_log,
         puntos: puntosPartida
     }
-    llamadoalPostPartidas(datos)
+
+    let guardadoExitoso = await llamadoalPostPartidas(datos); 
+    if (guardadoExitoso) {
+        await llenarTablaHome(); 
+    }
+
     puntosPartida = 0; // resetea los puntos para la próxima partida
 }
 
