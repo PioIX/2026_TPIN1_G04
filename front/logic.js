@@ -42,6 +42,7 @@ async function login() {
         user_log = usuarioEncontrado.id // Se coloca su id como usuario logueado
         console.log("Sesión iniciada, id:", user_log)
         ui.mostrarHome()
+        ui.clearLoginInputs()
 
     } else {
         alert("Usuario o contraseña incorrectos")
@@ -55,37 +56,65 @@ async function newUser() {
     let email = ui.getEmailRegistro()
     let password = ui.getPasswordRegistro()
 
+    // Verifica que todos los campos estén completos
+    if (usuario === "" || email === "" || password === "") {
+        alert("Debe completar todos los campos")
+        return;
+    }
+
+    // Verifica que el correo tenga un @
+    if (!email.includes("@")) {
+        alert("El correo electrónico debe contener un @")
+        return;
+    }
+
+    // Verifica que la contraseña tenga 8 caracteres o más
+    if (password.length < 8) {
+        alert("La contraseña debe tener 8 caracteres o más")
+        return;
+    }
+
     // Le asigna a la variable listaUsuarios todos los datos de la base de datos de usuarios
     let listaUsuarios = await llamadoAlGet()
 
+    let usuarioRepetido = false;
     let mailRepetido = false;
 
-    // Se chequea que el mail no se haya registrado
+    // Se chequea que el usuario y el mail no se hayan registrado ya
     for (let i = 0; i < listaUsuarios.length; i++) {
-        if (email === listaUsuarios[i].email) { // Si está en la base de datos..
-            mailRepetido = true; //Lo capta y se rompe
-            break;
+        if (usuario === listaUsuarios[i].usuario) {
+            usuarioRepetido = true;
+        }
+        if (email === listaUsuarios[i].email) {
+            mailRepetido = true;
         }
     }
 
-    if (mailRepetido) { // Si el maiL SÍ está repetido (si mailRepetido = true)
-        ui.clearRegistroInputs()
+    if (usuarioRepetido) { // Si el usuario ya existe
+        alert("Ese nombre de usuario ya existe")
+        return;
+    }
+
+    if (mailRepetido) { // Si el mail ya existe
         alert("El mail ya existe")
         return;
-    } else { // Y si no está repetido, entonces...
-        tomarDatos() // Se toman los datos y ocurre el pedido POST (Todo esto está en el index.js del front)
-        console.log("¡Se ha registrado con éxito!")
-        ui.clearRegistroInputs() // Se vacían los inputs
     }
+
+    // Si pasó todas las validaciones, se registra
+    await tomarDatos() // Se toman los datos y ocurre el pedido POST (Todo esto está en el index.js del front)
+    console.log("¡Se ha registrado con éxito!")
+    ui.clearRegistroInputs() // Se vacían los inputs
+    ui.mostrarHome() // Recién ahora pasamos a Home, porque el registro fue exitoso
+    ui.showModal("¡Bienvenido por primera vez, " + usuario + "!", "¡Disfrutá del juego!")
 }
 
 // Método para formar un ROSCO con las letras
 function posicionarLetras() {
-    const letras = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','Ñ','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+    const letras = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'Ñ', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
     const total = letras.length;
-    
-    const cx = 250;   // mitad de 500px
-    const cy = 250;
+
+    const cx = 225;   // mitad de 450px, que es el tamaño real de #letras (antes decía 250, de un 500px viejo)
+    const cy = 225;
     const radio = 200;
 
     letras.forEach((letra, i) => {
@@ -105,10 +134,11 @@ let indicePregunta = 0;
 let listaPreguntas = [];
 let puntosPartida = 0;
 let erroresPartida = 0;
+let temporizadorInstance = null; // guarda la instancia actual del temporizador para poder controlarla desde otras funciones
 
 // Método para armar las preguntas según su letra
 function armarPreguntasJuego(preguntas) {
-    const ordenLetras = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','Ñ','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+    const ordenLetras = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'Ñ', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
     let preguntasOrdenadas = []; // Esta variable va a ser un array que contenga todas las preguntas seleccionadas que se van a mostrar en el rosco después de filtrarlas
     ordenLetras.forEach(letra => {
         // El método ".filter()" devuelve un array nuevo (a partir de otro, con condiciones)
@@ -126,9 +156,11 @@ function armarPreguntasJuego(preguntas) {
 }
 
 async function inicializarJuego() {
-    ui.temporizador().iniciarTemporizador()
+    ui.showToast();
+    temporizadorInstance = ui.temporizador();
+    temporizadorInstance.iniciarTemporizador();
     let respuestaBD = await llamadoAlGetPreguntas()
-    listaPreguntas = respuestaBD.data || respuestaBD || []; 
+    listaPreguntas = respuestaBD.data || respuestaBD || [];
 
     preguntasArmadas = armarPreguntasJuego(listaPreguntas);
     indicePregunta = 0;
@@ -140,8 +172,8 @@ async function inicializarJuego() {
 
 function actualizarPreguntas() {
     let preguntaActual = preguntasArmadas[indicePregunta];
-    document.getElementById("textoLetraActual").innerHTML = "Letra actual: " + preguntaActual.letra;
-    document.getElementById("textoCondicion").innerHTML = "Condición: " + preguntaActual.condicion;
+    document.getElementById("textoLetraActual").innerHTML = preguntaActual.letra;
+    document.getElementById("textoCondicion").innerHTML = preguntaActual.condicion;
     document.getElementById("textoPregunta").innerHTML = preguntaActual.pregunta;
 }
 
@@ -164,17 +196,17 @@ function enviarRespuesta() {
 
     indicePregunta++;
     if (indicePregunta < preguntasArmadas.length) {
-        actualizarPreguntas();    
+        actualizarPreguntas();
         const input = document.getElementById('inputRespuesta');
-        input.value = ''; 
+        input.value = '';
         input.focus();
     } else {
         let mensajeStats = `¡Completaste el rosco! Aquí están tus resultados:\n\n` +
-                           ` Respuestas correctas: ${puntosPartida}\n` +
-                           ` Respuestas incorrectas: ${erroresPartida}`;
-                           
+            ` Respuestas correctas: ${puntosPartida}\n` +
+            ` Respuestas incorrectas: ${erroresPartida}`;
+
         ui.showModal("¡Fin de la Partida!", mensajeStats);
-        guardarPartida(); 
+        guardarPartida();
         ui.mostrarHome();
     }
 
@@ -198,12 +230,57 @@ function pasapalabra() {
     actualizarPreguntas();
 }
 
-function reiniciarJuego(){
-    const letras = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','Ñ','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+function finalizarJuego() {
+    // Muestra el modal con dos opciones: confirmar o cancelar.
+    ui.showConfirmModal(
+        "¡Atención!",
+        "¿Realmente finalizarás la partida? Ten en cuenta que el progreso de este juego no se guardará.",
+        confirmarFinalizarJuego  // Le pasamos el NOMBRE de la función que se debe ejecutar si el usuario confirma.
+
+    );
+    // Si el usuario elige "No, gracias", showConfirmModal simplemente cierra el modal
+    // y el juego continúa exactamente donde estaba (acá no pasa nada más).
+}
+
+// Se ejecuta SOLO si el usuario toca "Sí, finalizar" en el modal
+function confirmarFinalizarJuego() {
+    if (temporizadorInstance) {
+        temporizadorInstance.frenarTemporizador(); // corta el timer sin guardar ni reiniciar la partida
+    }
+    ui.mostrarHome(); // vuelve a Home sin guardar la partida
+}
+
+function pausarJuego() {
+    if (!temporizadorInstance) return;
+
+    const quedoPausado = temporizadorInstance.pausarTemporizador(); // true = se pausó, false = se reanudó
+
+    if (quedoPausado) {
+        // Un solo modal: el mismo botón "Reanudar" cierra el modal Y reanuda el juego
+        ui.showModal(
+            "Juego pausado",
+            "Tocá 'Reanudar' cuando quieras seguir jugando.",
+            "Reanudar",
+            reanudarJuego
+        );
+    }
+    // Si el usuario reanuda tocando directamente el botón "Pausa" (ahora "Reanudar")
+    // de la pantalla del juego, no hace falta mostrar ningún modal.
+}
+
+// Se ejecuta al tocar "Reanudar" dentro del modal
+function reanudarJuego() {
+    if (temporizadorInstance) {
+        temporizadorInstance.pausarTemporizador();
+    }
+}
+
+function reiniciarJuego() {
+    const letras = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'Ñ', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
     for (let i = 0; i < letras.length; i++) {
         let span = document.getElementById(`letra-${letras[i]}`);
         if (span != null) {
-            span.style.backgroundColor = ""; 
+            span.style.backgroundColor = "";
         }
     }
 
@@ -216,7 +293,7 @@ function reiniciarJuego(){
     if (listaPreguntas.length > 0) {
         actualizarPreguntas();
         const input = document.getElementById('inputRespuesta');
-        input.value = ''; 
+        input.value = '';
         input.focus();
     }
     inicializarJuego();
@@ -228,21 +305,24 @@ async function guardarPartida() {
         puntos: puntosPartida
     }
 
-    let guardadoExitoso = await llamadoalPostPartidas(datos); 
+    let guardadoExitoso = await llamadoalPostPartidas(datos);
     if (guardadoExitoso) {
-        await llenarTablaHome(); 
+        await llenarTablaHome();
     }
 
     puntosPartida = 0; // resetea los puntos para la próxima partida
 }
 
-document.getElementById('inputRespuesta').addEventListener('keydown', function(event) {
+document.getElementById('inputRespuesta').addEventListener('keydown', function (event) {
     if (event.key === 'Enter') {
-        event.preventDefault(); 
+        event.preventDefault();
         enviarRespuesta(); // Llama a la función de arriba
     }
 });
 
-// Falta:
-// - Método para frenar el juego (y cambiar la pantalla, advertir que los cambios no se guardarán)
-// - Método para pausar el juego (se tiene que mostrar un ShowModal, porque sino el usuario puede hacer trampa)
+document.getElementById('inputRespuesta').addEventListener('keydown', function (event) {
+    if (event.key === ' ') { // Si se toca la tecla Espacio...
+        event.preventDefault();
+        pasapalabra();
+    }
+});

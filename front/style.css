@@ -194,24 +194,83 @@ button, a{
 }
 
 /* Pantalla home */
-#home h2{
-    font-family: 'Chau Philomene One', sans-serif;
-    color: black;
-    font-size: 28px;
-    margin-bottom: 20px;
-    margin-left: 120px;
+#home {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+    justify-content: center;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 130px 20px 60px;
+    text-align: center;
+    flex-wrap: wrap;
 }
 
-#home button {
-    font-size: 60px;
-    margin: 100px;
-    font-family: 'Pixelify sans', sans-serif;
+/* Columna izquierda: botón de empezar + stats personales */
+#home > div:first-child {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+#home h2 {
+    font-family: 'Chau Philomene One', sans-serif;
+    color: black;
+    font-size: 26px;
+    margin: 0 0 15px 0;
+    text-align: left;
+}
+
+#ranking {
+    flex: 1 1 320px;
+    min-width: 280px;
+}
+
+#botonEmpezar {
+    font-size: 46px;
+    padding: 30px 100px;
+    font-family: 'Pixelify Sans', sans-serif;
     background-color: transparent;
     color: #ff914d;
-    border: none;
-    border-radius: 12px;
-    align-items: center;
+    border: 2px solid #ff7722;
+    cursor: pointer;
+    margin: 0 0 40px 0;
+}
+
+#statsPersonales {
+    display: flex;
+    gap: 20px;
     justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 45px;
+}
+
+.statCard {
+    background-color: #fffdf5;
+    border: 3px solid #ff7722;
+    border-radius: 20px;
+    padding: 18px 20px;
+    box-shadow: 6px 6px 0px black;
+    width: 160px;
+    box-sizing: border-box;
+}
+
+.statLabel {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #b5723d;
+    margin: 0 0 6px 0;
+}
+
+.statValue {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 26px;
+    color: #ff751f;
+    margin: 0;
 }
 
 #modalGame {
@@ -251,11 +310,14 @@ button, a{
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 65%;
+    width: 270px;
+    height: 270px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     text-align: center;
+    gap: 16px;
 }
 
 #botonesJuego {
@@ -270,6 +332,9 @@ button, a{
 
 #respuestaCorrectaJuego{
     font-family:'Arimo', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: #e0483a;
 }
 
 #letras {
@@ -332,21 +397,42 @@ button, a{
 }
 
 #letra_y_condicion {
-    width: 100%;
-    margin-bottom: 10px;
-    font-family: 'Arimo', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+#textoCondicion {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #b5723d;
+    margin: 0;
+}
+
+#textoLetraActual {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 38px;
+    color: #ff751f;
+    margin: 0;
+    line-height: 1;
+    letter-spacing: 1px;
 }
 
 #pregunta {
     width: 100%;
-    margin-bottom: 15px;
-    background-color: #f8be92;
-    border-radius: 25px;
-    padding: 20px;
-    border: 2px solid #ff7722;
-    box-sizing: border-box;
-    font-family: 'Open Sans', sans-serif;
-    text-align: center;
+}
+
+#textoPregunta {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 17px;
+    font-weight: 500;
+    color: #2b2b2b;
+    line-height: 1.5;
+    margin: 0;
 }
 
 #inputRespuesta {   
@@ -624,6 +710,7 @@ table th {
     padding: 0 24px 24px;
     display: flex;
     justify-content: flex-end;
+    gap: 12px;
 }
 
 .btn-success {
@@ -635,4 +722,92 @@ table th {
     font-family: 'Archivo Black', sans-serif;
     font-size: 15px;
     cursor: pointer;
+}
+
+.btn-danger {
+    padding: 12px 26px;
+    border-radius: 12px;
+    border: none;
+    background: #e0483a;
+    color: #fff;
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.btn-danger:hover {
+    background: #c73a2e;
+}
+
+.btn-secondary {
+    padding: 12px 26px;
+    border-radius: 12px;
+    border: 2px solid #ff7722;
+    background: #fffdf5;
+    color: #000;
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.btn-secondary:hover {
+    background: #f8be92;
+}
+
+/* Toast de notificación (atajos de teclado) */
+.toast {
+    position: fixed;
+    top: 100px;
+    right: 25px;
+    width: 300px;
+    background: #fffdf5;
+    border-left: 6px solid #ff7722;
+    border-radius: 14px;
+    box-shadow: 8px 8px 0px black;
+    padding: 16px 40px 16px 18px;
+    z-index: 1200;
+    box-sizing: border-box;
+
+    opacity: 0;
+    transform: translateX(30px);
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+}
+
+.toast-title {
+    margin: 0 0 6px 0;
+    font-family: 'Chau Philomene One', sans-serif;
+    font-size: 17px;
+    color: #ff751f;
+}
+
+.toast-text {
+    margin: 0;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    color: #000;
+    line-height: 1.4;
+}
+
+.toast-close {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    border: none;
+    background: transparent;
+    font-size: 20px;
+    line-height: 1;
+    color: #999;
+    cursor: pointer;
+    padding: 0;
+}
+
+.toast-close:hover {
+    color: #000;
 }
