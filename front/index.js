@@ -68,7 +68,7 @@ async function llamadoalPost(datos) {
 
 }
 
-function tomarDatos() {
+async function tomarDatos() {
     let datos = {
         usuario: ui.getUserRegistro(),
         clave: ui.getPasswordRegistro(),
@@ -76,7 +76,7 @@ function tomarDatos() {
         es_admin: 0,
     }
     console.log(datos)
-    llamadoalPost(datos)
+    await llamadoalPost(datos)
 }
 //USUARIOS ADMIN
 //agregar usuario
@@ -397,4 +397,31 @@ async function llenarTablaHome() {
             <td>${resultPartidas[i].puntos}</td>
         </tr>`;
     }
+
+    // resultPartidas ya está ordenado de mayor a menor puntaje (se ordenó más arriba)
+    actualizarStatsPersonales(resultPartidas);
+}
+
+// Muestra el mejor puntaje del usuario logueado y en qué puesto está dentro del ranking general
+function actualizarStatsPersonales(resultPartidasOrdenadas) {
+    let mejorPuntajeEl = document.getElementById("mejorPuntajeUsuario");
+    let posicionEl = document.getElementById("posicionUsuario");
+    if (!mejorPuntajeEl || !posicionEl) return; // si estos elementos no están en pantalla, no hacemos nada
+
+    // Se queda solo con las partidas del usuario logueado
+    let partidasUsuario = resultPartidasOrdenadas.filter(p => p.usuario == user_log);
+
+    if (!user_log || partidasUsuario.length === 0) {
+        mejorPuntajeEl.textContent = "—";
+        posicionEl.textContent = "Todavía no jugaste";
+        return;
+    }
+
+    // Mejor puntaje del usuario
+    let mejorPuntaje = Math.max(...partidasUsuario.map(p => p.puntos));
+    mejorPuntajeEl.textContent = mejorPuntaje;
+
+    // Posición de esa mejor partida dentro del ranking general
+    let posicion = resultPartidasOrdenadas.findIndex(p => p.usuario == user_log && p.puntos === mejorPuntaje) + 1;
+    posicionEl.textContent = `#${posicion} de ${resultPartidasOrdenadas.length}`;
 }

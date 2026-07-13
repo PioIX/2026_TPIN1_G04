@@ -41,7 +41,7 @@
             <input type="password" id="passwordRegistro" placeholder="Contraseña">
 
         </div>
-        <button onclick="newUser(); ui.mostrarHome()">NEXT</button>
+        <button onclick="newUser()">NEXT</button>
     </div>
 
     <div id="seccionInicioSesion" style="display: none;">
@@ -58,12 +58,27 @@
     </div>
 
     <div id="home" style="display: none;">
-        <button id="botonEmpezar"
-            onclick="ui.mostrarJuego(); ui.modalGame('¡EMPEZAR!', 'Tenés 3 minutos para responder todas las preguntas del Rosco. ¿Estás listo?', inicializarJuego)"
-            ,>¡Ir al juego!</button> <!-- Acá se van a ver otros datos como... -->
-        <h2>TOP 5</h2>
+        <div>
+            <button id="botonEmpezar"
+                onclick="ui.mostrarJuego(); ui.modalGame('¡EMPEZAR!', 'Tenés 3 minutos para responder todas las preguntas del Rosco. ¿Estás listo?', inicializarJuego)">¡Ir
+                al juego! </button>
+
+            <div id="statsPersonales">
+                <div class="statCard">
+                    <p class="statLabel">Tu mejor puntaje</p>
+                    <p class="statValue" id="mejorPuntajeUsuario">—</p>
+                </div>
+                <div class="statCard">
+                    <p class="statLabel">Tu posición</p>
+                    <p class="statValue" id="posicionUsuario">—</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="ranking">
+            <h2>Ranking global - TOP 5 Mejores partidas</h2>
             <table>
-            <thead>
+                <thead>
                     <tr>
                         <th>usuario</th>
                         <th>puntos</th>
@@ -71,10 +86,9 @@
                 </thead>
                 <tbody id="tablaPartidasHome">
                 </tbody>
-        </table>
-        <!--
-        - Tabla de posiciones 
-        - Historial / Estadísticas: Cuántos roscos completó, récord de tiempo, etc -->
+            </table>
+        </div>
+
     </div>
 
 
@@ -134,10 +148,10 @@
 
                 <div class="container">
                     <h2>Tiempo Restante</h2>
-                    <p class="temporizador" id="temporizador">03:00</p>
+                    <p class="temporizador" id="temporizador">03:30</p>
                     <div id="contenedorBotones">
-                        <button id="frenar">Finalizar juego</button>
-                        <button id="pausa">Pausa</button>
+                        <button id="frenar" onclick="finalizarJuego()">Finalizar juego</button>
+                        <button id="pausa" onclick="pausarJuego()">Pausa</button>
                     </div>
                 </div>
             </div>
@@ -287,7 +301,7 @@
                 <p id="modalBody">Modal body text goes here.</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" onclick="ui.hideModal()">¡Listo!</button>
+                <button type="button" class="btn btn-success" id="modalBoton">¡Listo!</button>
             </div>
         </div>
     </div>
@@ -304,6 +318,31 @@
                 <button type="button" class="btn btn-success" id="btnEmpezarJuegoJuego">¡START!</button>
             </div>
         </div>
+    </div>
+
+    <!-- ui.showConfirmModal() -->
+    <div id="modalConfirmar" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 id="modalConfirmarTitle">Confirmar acción</h5>
+            </div>
+            <div class="modal-body">
+                <p id="modalConfirmarBody"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="btnConfirmarNo">No, gracias</button>
+                <button type="button" class="btn btn-danger" id="btnConfirmarSi">Sí, finalizar</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ui.showToast() / ui.hideToast() -->
+    <div id="toastTeclado" class="toast">
+        <button type="button" class="toast-close" onclick="ui.hideToast()">&times;</button>
+        <p class="toast-title">💡 Atajos de teclado</p>
+        <p class="toast-text">Presioná <strong>Espacio</strong> para pasapalabra y <strong>Enter</strong> para enviar tu
+            respuesta.</p>
     </div>
 
 
