@@ -370,6 +370,7 @@ async function llenarTablaHome() {
         return; //si la tabla no tiene nada no se ejecuta lo de abajo
     }
     // Ordena el array de mayor a menor puntaje
+    
     for (let i = 0; i < resultPartidas.length; i++) {
         for (let j = 0; j < resultPartidas.length - 1; j++) {
             if (resultPartidas[j].puntos < resultPartidas[j + 1].puntos) {
@@ -381,7 +382,8 @@ async function llenarTablaHome() {
     }
 
     tabla.innerHTML = "";
-    for (let i = 0; i < resultPartidas.length; i++) {
+    let limite = Math.min(5, resultPartidas.length);
+    for (let i = 0; i < limite; i++) {
         let nombreUsuario = resultPartidas[i].usuario; // si no encuentra el nombre muestra el id
         for (let k = 0; k < listaUsuarios.length; k++) { //se fija en la lista de usuarios
             if (listaUsuarios[k].id == resultPartidas[i].usuario) {

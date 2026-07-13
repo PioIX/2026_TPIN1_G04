@@ -188,7 +188,7 @@ class UserInterface {
         const pausa = document.getElementById("pausa");
         const temporizador = document.getElementById("temporizador");
 
-        let tiempoRestante = 180;
+        let tiempoRestante = 210;
         let intervalo;
         let pausado = false;
 
@@ -204,14 +204,20 @@ class UserInterface {
                 actualizarTiempo();
                 if (tiempoRestante === 0) {
                     clearInterval(intervalo);
-                    alert("¡Se acabó el tiempo!");
+                    let mensajeStats = `¡Se acabó el tiempo! Aquí están tus resultados:\n\n` +
+                               ` Respuestas correctas: ${puntosPartida}\n` +
+                               ` Respuestas incorrectas: ${erroresPartida}`;
+                
+                    ui.showModal("¡Fin de la Partida!", mensajeStats);
+                    guardarPartida(); 
+                    ui.mostrarHome();
                 }
             }, 1000);
         }
 
         function frenarTemporizador() {
             clearInterval(intervalo);
-            tiempoRestante = 180;
+            tiempoRestante = 210;
             pausado = false;
             pausa.textContent = "Pausa";
             actualizarTiempo();

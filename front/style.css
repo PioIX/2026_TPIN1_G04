@@ -194,6 +194,13 @@ button, a{
 }
 
 /* Pantalla home */
+#home h2{
+    font-family: 'Chau Philomene One', sans-serif;
+    color: black;
+    font-size: 28px;
+    margin-bottom: 20px;
+    margin-left: 120px;
+}
 
 #home button {
     font-size: 60px;
