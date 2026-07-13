@@ -46,7 +46,7 @@ class UserInterface {
     //Cambio de pantalla
     // Cambio de pantalla entre Login y Registro
     mostrarInicio() {
-        document.getElementById("paginaPrincipal").style.display = "block";
+        document.getElementById("paginaPrincipal").style.display = "flex";
         document.getElementById("seccionInicioSesion").style.display = "none";
         document.getElementById("home").style.display = "none";
         document.getElementById("seccionRegistro").style.display = "none";
@@ -68,13 +68,17 @@ class UserInterface {
         const botonesBarra = document.getElementById("hrefs");
         pantallaPrincipal.style.display = "none";
         pantallaLogin.style.display = "block";
-        botonesBarra.style.display = "block";
+        botonesBarra.style.display = "flex";
         document.getElementById("seccionRegistro").style.display = "none";
+        document.getElementById("home").style.display = "none";
+        document.getElementById("seccionJuego").style.display = "none";
+        document.getElementById("seccionAdmin").style.display = "none";
     }
 
     // Muestra la pantalla del juego
     mostrarHome() {
-        document.getElementById("home").style.display = "block";
+        document.getElementById("home").style.display = "flex";
+        document.getElementById("hrefs").style.display = "none";
         document.getElementById("paginaPrincipal").style.display = "none";
         document.getElementById("seccionRegistro").style.display = "none";
         document.getElementById("seccionInicioSesion").style.display = "none";
@@ -84,7 +88,7 @@ class UserInterface {
     }
 
     mostrarJuego() {
-        document.getElementById("seccionJuego").style.display = "block";
+        document.getElementById("seccionJuego").style.display = "flex";
         document.getElementById("paginaPrincipal").style.display = "none";
         document.getElementById("seccionRegistro").style.display = "none";
         document.getElementById("seccionInicioSesion").style.display = "none";
@@ -205,11 +209,11 @@ class UserInterface {
                 if (tiempoRestante === 0) {
                     clearInterval(intervalo);
                     let mensajeStats = `¡Se acabó el tiempo! Aquí están tus resultados:\n\n` +
-                               ` Respuestas correctas: ${puntosPartida}\n` +
-                               ` Respuestas incorrectas: ${erroresPartida}`;
-                
+                        ` Respuestas correctas: ${puntosPartida}\n` +
+                        ` Respuestas incorrectas: ${erroresPartida}`;
+
                     ui.showModal("¡Fin de la Partida!", mensajeStats);
-                    guardarPartida(); 
+                    guardarPartida();
                     ui.mostrarHome();
                 }
             }, 1000);
@@ -221,7 +225,6 @@ class UserInterface {
             pausado = false;
             pausa.textContent = "Pausa";
             actualizarTiempo();
-            reiniciarJuego();
         }
 
         function pausarTemporizador() {
@@ -234,12 +237,10 @@ class UserInterface {
                 pausado = false;
                 pausa.textContent = "Pausa";
             }
+            return pausado; // avisa al que llamó si quedó pausado (true) o reanudado (false)
         }
 
-        frenar.onclick = frenarTemporizador;
-        pausa.onclick = pausarTemporizador;
-
-        return { iniciarTemporizador };
+        return { iniciarTemporizador, frenarTemporizador, pausarTemporizador };
 
     }
 
@@ -248,10 +249,22 @@ class UserInterface {
     }
 
     // showModal()
-    showModal(titulo, texto) {
+    // textoBoton y accion son opcionales: si no se pasan, el botón dice "¡Listo!" y solo cierra el modal.
+    // Si se pasa una accion, esta se ejecuta al tocar el botón (además de cerrar el modal).
+    showModal(titulo, texto, textoBoton = "¡Listo!", accion = null) {
         document.getElementById("modalTitle").textContent = titulo;
         document.getElementById("modalBody").textContent = texto;
-        document.getElementById("modal").classList.add("show");
+
+        const modal = document.getElementById("modal");
+        const boton = document.getElementById("modalBoton");
+
+        boton.textContent = textoBoton;
+        boton.onclick = function () {
+            modal.classList.remove("show");
+            if (accion) accion();
+        };
+
+        modal.classList.add("show");
     }
 
     hideModal() {
@@ -275,6 +288,41 @@ class UserInterface {
             funcionEmpezar(); // Llama a inicializarJuego()
         };
 
+    }
+
+    showConfirmModal(titulo, texto, funcionConfirmar) {
+        document.getElementById("modalConfirmarTitle").textContent = titulo;
+        document.getElementById("modalConfirmarBody").textContent = texto;
+
+        const modal = document.getElementById("modalConfirmar");
+        const btnSi = document.getElementById("btnConfirmarSi");
+        const btnNo = document.getElementById("btnConfirmarNo");
+
+        modal.classList.add("show");
+
+        // Si confirma, se cierra el modal y se ejecuta la acción (finalizar sin guardar)
+        btnSi.onclick = function () {
+            modal.classList.remove("show");
+            funcionConfirmar();
+        };
+
+        // Si no confirma, simplemente se cierra el modal y el juego continúa
+        btnNo.onclick = function () {
+            modal.classList.remove("show");
+        };
+    }
+
+    hideConfirmModal() {
+        document.getElementById("modalConfirmar").classList.remove("show");
+    }
+
+    // Toast de notificación (arriba a la derecha, solo se descarta, no requiere aceptar nada)
+    showToast() {
+        document.getElementById("toastTeclado").classList.add("show");
+    }
+
+    hideToast() {
+        document.getElementById("toastTeclado").classList.remove("show");
     }
 };
 
