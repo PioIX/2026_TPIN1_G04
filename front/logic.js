@@ -326,3 +326,35 @@ document.getElementById('inputRespuesta').addEventListener('keydown', function (
         pasapalabra();
     }
 });
+//Registro
+document.getElementById("usuarioRegistro").addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        document.getElementById("correoRegistro").focus(); //Cuando presiona enter al poner el usuario pasa al correo
+    }
+});
+document.getElementById("correoRegistro").addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        document.getElementById("passwordRegistro").focus(); // del correo pasa a la contraseña
+    }
+});
+document.getElementById('passwordRegistro').addEventListener('keydown', function (event) {
+    if (event.key === 'Enter') {
+        event.preventDefault();
+        newUser(); // Llama a la función de arriba
+    }
+});
+//Login 
+document.getElementById("usuarioLogin").addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        document.getElementById("passwordLogin").focus();
+    }
+});
+document.getElementById("passwordLogin").addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        login();
+    }
+});

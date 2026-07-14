@@ -261,6 +261,7 @@ async function llamadoAlGetPartidas() {
 
     let tablaPartidas = document.getElementById("tablaPartidas")
     let selectPartidas = document.getElementById("selectPartida")
+    let selectModificarPartidas = document.getElementById("selectModificarDatosPartidas")
 
     if(tablaPartidas){
         tablaPartidas.innerHTML = ""
@@ -296,6 +297,22 @@ async function llamadoAlGetPartidas() {
                 `
             }
         }
+        //Llena el select con los usuarios
+        selectModificarPartidas.innerHTML = ""
+        for (let i = 0; i < resultPartidas.length; i++) {
+            let nombreUsuario = resultPartidas[i].usuario;
+            for (let j = 0; j < listaUsuarios.length; j++) {
+                if (listaUsuarios[j].id == resultPartidas[i].usuario) {
+                    nombreUsuario = listaUsuarios[j].usuario;
+                    break;
+                }
+            }
+            selectModificarPartidas.innerHTML += `
+                <option value="${resultPartidas[i].id}">
+                    ${nombreUsuario}
+                </option>
+            `;
+        }
     }
 }
 
@@ -320,9 +337,9 @@ async function eliminarPartidas() {
 
 async function modificarPartidas() {
     let datos = { // obtiene los datos de los inputs y selects
-        id: ui.getModificarDatosPartidas(),
-        modificacion: ui.getSelectModificacionPartidas(),
-        valor: ui.getNuevoValorPartidas()
+        id: ui.selectModificarDatosPartidas(),
+        modificacion: ui.selectModificacionPartidas(),
+        valor: ui.getNuevoValorPartida()
     }
     try {
         let response = await fetch("http://localhost:4000/partidas", {
