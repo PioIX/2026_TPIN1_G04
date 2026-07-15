@@ -367,10 +367,12 @@ async function llamadoalPostPartidas(datos) {
             },
             body: JSON.stringify(datos)
         })
-        let result = await response.json()
-        console.log(result)
+        let result = await response.json();
+        console.log(result);
+        return true;
     } catch (error) {
-        console.log("ERROR al guardar la partida", error)
+        console.log("ERROR al guardar la partida", error);
+        return false;
     }
 }
 
