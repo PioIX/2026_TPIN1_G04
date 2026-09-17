@@ -102,6 +102,13 @@ async function newUser() {
 
     // Si pasó todas las validaciones, se registra
     await tomarDatos() // Se toman los datos y ocurre el pedido POST (Todo esto está en el index.js del front)
+
+    let listaActualizada = await llamadoAlGet()
+    let nuevoUsuario = listaActualizada.find(u => u.usuario === usuario)
+    if (nuevoUsuario) {
+        user_log = nuevoUsuario.id
+    }
+
     console.log("¡Se ha registrado con éxito!")
     ui.clearRegistroInputs() // Se vacían los inputs
     ui.mostrarHome() // Recién ahora pasamos a Home, porque el registro fue exitoso
@@ -156,6 +163,7 @@ function armarPreguntasJuego(preguntas) {
 }
 
 async function inicializarJuego() {
+    
     ui.showToast();
     temporizadorInstance = ui.temporizador();
     temporizadorInstance.iniciarTemporizador();
@@ -168,7 +176,9 @@ async function inicializarJuego() {
     if (preguntasArmadas.length > 0) {
         actualizarPreguntas();
     }
+    reiniciarJuego();
 }
+
 
 function actualizarPreguntas() {
     let preguntaActual = preguntasArmadas[indicePregunta];
@@ -177,7 +187,7 @@ function actualizarPreguntas() {
     document.getElementById("textoPregunta").innerHTML = preguntaActual.pregunta;
 }
 
-function enviarRespuesta() {
+async function enviarRespuesta() {
     let preguntaActual = preguntasArmadas[indicePregunta];
     let letraActual = preguntaActual.letra.toUpperCase();
 
@@ -206,7 +216,7 @@ function enviarRespuesta() {
             ` Respuestas incorrectas: ${erroresPartida}`;
 
         ui.showModal("¡Fin de la Partida!", mensajeStats);
-        guardarPartida();
+        await guardarPartida();
         ui.mostrarHome();
     }
 
@@ -296,7 +306,7 @@ function reiniciarJuego() {
         input.value = '';
         input.focus();
     }
-    inicializarJuego();
+    
 }
 
 async function guardarPartida() {
@@ -324,5 +334,37 @@ document.getElementById('inputRespuesta').addEventListener('keydown', function (
     if (event.key === ' ') { // Si se toca la tecla Espacio...
         event.preventDefault();
         pasapalabra();
+    }
+});
+//Registro
+document.getElementById("usuarioRegistro").addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        document.getElementById("correoRegistro").focus(); //Cuando presiona enter al poner el usuario pasa al correo
+    }
+});
+document.getElementById("correoRegistro").addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        document.getElementById("passwordRegistro").focus(); // del correo pasa a la contraseña
+    }
+});
+document.getElementById('passwordRegistro').addEventListener('keydown', function (event) {
+    if (event.key === 'Enter') {
+        event.preventDefault();
+        newUser(); // Llama a la función de arriba
+    }
+});
+//Login 
+document.getElementById("usuarioLogin").addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        document.getElementById("passwordLogin").focus();
+    }
+});
+document.getElementById("passwordLogin").addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        login();
     }
 });

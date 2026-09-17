@@ -203,7 +203,7 @@ class UserInterface {
         }
 
         function iniciarTemporizador() {
-            intervalo = setInterval(() => {
+            intervalo = setInterval(async () => {
                 tiempoRestante--;
                 actualizarTiempo();
                 if (tiempoRestante === 0) {
@@ -213,7 +213,7 @@ class UserInterface {
                         ` Respuestas incorrectas: ${erroresPartida}`;
 
                     ui.showModal("¡Fin de la Partida!", mensajeStats);
-                    guardarPartida();
+                    await guardarPartida()
                     ui.mostrarHome();
                 }
             }, 1000);
